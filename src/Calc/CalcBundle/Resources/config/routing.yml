@@ -1,0 +1,28 @@
+calc_api_homepage:
+    path:     /
+    defaults: { _controller: CalcCalcBundle:Web:index }
+
+calc_api_references:
+    path:     /references
+    defaults: { _controller: CalcCalcBundle:References:list }
+    methods: [GET]
+
+calc_api_reference:
+    path:     /references/{name}
+    defaults: { _controller: CalcCalcBundle:References:show }
+    methods: [GET]
+
+calc_api_reference_add:
+    path:     /references
+    defaults: { _controller: CalcCalcBundle:References:add }
+    methods: [POST]
+
+calc_api_reference_delete:
+    path:     /references/{id}
+    defaults: { _controller: CalcCalcBundle:References:delete }
+    methods: [DELETE]
+
+calc_api_reference_update:
+    path:     /references/{name}/{id}
+    defaults: { _controller: CalcCalcBundle:References:edit }
+    methods: [PATCH]

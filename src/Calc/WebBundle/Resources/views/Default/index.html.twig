@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta content="text/html" charset="UTF-8">
+    <title>Калькулятор</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            position: relative;
+            justify-content: center;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .content {
+            width: 90%;
+            height: 90%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: nowrap;
+            flex-direction: column;
+        }
+
+        article, article form {
+            height: 90%;
+        }
+
+        .collapse {
+            display: none;
+        }
+
+        fieldset {
+            border: none;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #floors-collapse:checked + legend + div {
+            display: block;
+        }
+        #floors-collapse + legend + div {
+            display: none;
+        }
+    </style>
+    <script>
+        function submit(event) {
+            console.error('AAAAAAAAAA');
+            console.log(event);
+            event.preventDefault && event.preventDefault();
+            return false;
+        }
+    </script>
+</head>
+<body>
+<div class="content">
+    <header>
+        <h4>Калькулятор стоимости дома</h4>
+    </header>
+    <nav></nav>
+    <article>
+        <form name="calc" method="post" enctype="application/x-www-form-urlencoded" action="javascript:submit(this)">
+            <fieldset>
+                <input type="checkbox" id="floors-collapse" class="collapse">
+                <legend><label for="floors-collapse">Этажность</label></legend>
+                <section>
+                    <input type="radio" name="floors" value=1 id="floors-1" checked><label for="floors-1">1</label>
+                    <input type="radio" name="floors" value=2 id="floors-1-5"><label for="floors-1-5">1.5</label>
+                    <input type="radio" name="floors" value=3 id="floors-2"><label for="floors-2">2</label>
+                </section>
+            </fieldset>
+
+            <fieldset id="floor-1">
+                <input type="checkbox" id="floor-1-collapse" class="collapse">
+                <legend><label for="floor-1-collapse">1 Этаж</label></legend>
+                <section>
+                    <fieldset class="options">
+                        <ul></ul>
+                    </fieldset>
+                </section>
+            </fieldset>
+
+            <fieldset id="floor-2">
+                <input type="checkbox" id="floor-2-collapse" class="collapse">
+                <legend><label for="floor-2-collapse">2 Этаж</label></legend>
+                <section>
+
+                </section>
+            </fieldset>
+
+            <fieldset id="attic">
+                <input type="checkbox" id="attic-collapse" class="collapse">
+                <legend><label for="attic-collapse">Чердачное помещение</label></legend>
+                <section>
+
+                </section>
+            </fieldset>
+
+            <fieldset id="roof">
+                <input type="checkbox" id="roof-collapse" class="collapse">
+                <legend><label for="roof-collapse">Крыша</label></legend>
+                <section>
+
+                </section>
+            </fieldset>
+
+            <button type="submit">Расчитать</button>
+        </form>
+    </article>
+    <aside></aside>
+    <footer></footer>
+</div>
+</body>
+</html>

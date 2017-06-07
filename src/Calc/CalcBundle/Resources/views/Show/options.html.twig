@@ -1,0 +1,37 @@
+<fieldset id="{{ name }}">
+    <input type="checkbox" id="{{ element }}-{{ name }}-{{ category }}-collapse" class="collapse">
+    <legend><label for="{{ element }}-{{ name }}-{{ category }}-collapse">{{ label }}</label></legend>
+    <div class="block">
+        <section class="required">
+            <h5>Обязательные опции</h5>
+            <ul>
+                {% for option in references %}
+                    {%  if option.required == 1 and option.categories == category and option.elements == element %}
+                        <li class="options" id="option-{{ category }}-{{ element }}-{{ option.id }}">
+                            <span class="name">{{ option.name }}</span>
+                            {% if user == 'admin' %}
+                                <span class="price">{{ option.price_dry }}{{ option.price_wet }}/</span>
+                                <span class="currency">{{ option.currency }}</span>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <span class="total">0</span>
+        </section>
+        <section class="additional">
+            <h5>Дополнительные опции</h5>
+            <ul></ul>
+            <select name="">
+                <option value="" disabled selected>Выберите опцию</option>
+                {% for option in references %}
+                    {%  if option.required == 0 and option.categories == category and option.elements == element %}
+                        <option value={{ option.id }}>{{ option.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            <button class="add">+</button>
+            <span class="total">0</span>
+        </section>
+    </div>
+</fieldset>

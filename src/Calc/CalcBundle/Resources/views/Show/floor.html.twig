@@ -1,0 +1,27 @@
+<fieldset id="floor-{{ floor }}">
+    {% set element = 'floors' %}
+    <input type="checkbox" id="floor-{{ floor }}-collapse" class="collapse">
+    <legend><label for="floor-{{ floor }}-collapse">1 Этаж</label></legend>
+    <div class="block">
+        {% block floor_1_floor %}
+            {% set name = 'floor-' + floor %}
+            {% set category = 'floor' %}
+            {% set label = 'Пол' %}
+            {% include "CalcCalcBundle:Show:options.html.twig" %}
+        {% endblock %}
+
+        {% block floor_1_wall %}
+            {% set name = 'floor-' + floor %}
+            {% set category = 'wall' %}
+            {% set label = 'Стены' %}
+            {% include "CalcCalcBundle:Show:options.html.twig" %}
+        {% endblock %}
+
+        {% block floor_1_roof %}
+            {% set name = 'floor-' + floor %}
+            {% set category = 'roof' %}
+            {% set label = 'Потолок' %}
+            {% include "CalcCalcBundle:Show:options.html.twig" %}
+        {% endblock %}
+    </div>
+</fieldset>

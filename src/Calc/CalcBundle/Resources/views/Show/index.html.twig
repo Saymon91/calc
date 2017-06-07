@@ -1,0 +1,80 @@
+{% extends "CalcCalcBundle:Show:base.html.twig" %}
+
+{% block title %}Калькулятор стоимости{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/calccalc/css/calc.css') }}">
+{% endblock %}
+
+{%  block scripts %}
+    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/select2.full.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/calc.js') }}"></script>
+{% endblock %}
+{% block header %}Калькулятор стоимости{% endblock %}
+
+{% block content %}
+    <form name="calc" method="post" enctype="application/x-www-form-urlencoded" action="javascript:submit(this)">
+    {% block editor %}
+        <fieldset>
+            <input type="checkbox" id="config-collapse" class="collapse" disabled checked>
+            <legend><label for="config-collapse">Этажность</label></legend>
+            <div class="block">
+                <fieldset>
+                    {% block floors_count %}
+                        <input type="checkbox" id="floors-collapse" class="collapse" disabled checked>
+                        <legend><label for="floors-collapse">Этажность</label></legend>
+                        <div class="block">
+                            <input type="radio" name="floors" value=1 id="floors-1" checked><label for="floors-1">Один</label>
+                            <input type="radio" name="floors" value=1.5 id="floors-1-5"><label for="floors-1-5">Полтора</label>
+                            <input type="radio" name="floors" value=2 id="floors-2"><label for="floors-2">Два</label>
+                        </div>
+                    {% endblock %}
+                </fieldset>
+                <fieldset>
+                    {% block dimensions %}
+                        <input type="checkbox" id="dimensions-collapse" class="collapse" disabled checked>
+                        <legend><label for="dimensions-collapse">Габариты</label></legend>
+                        <div class="block">
+                            <label for="dimensions-length">Длина</label><input type="number" name="length" id="dimensions-length">м
+                            <label for="dimensions-width">Ширина</label><input type="number" name="width" id="dimensions-width">м
+                            <label for="dimensions-height">Высота помещений</label><input type="number" name="height" id="dimensions-height">м
+                            <hr>
+                            <label for="dimensions-area">Площадь</label><input type="number" name="area" id="dimensions-area" disabled>м<sup>2</sup>
+                        </div>
+                    {% endblock %}
+                </fieldset>
+            </div>
+        </fieldset>
+
+        {% block floors %}
+            {% block floor_1 %}
+                {% set floor = 1 %}
+                {% include "CalcCalcBundle:Show:floor.html.twig" %}
+            {% endblock %}
+
+            {% block floor_2 %}
+                {% set floor = 2 %}
+                {% include "CalcCalcBundle:Show:floor.html.twig" %}
+            {% endblock %}
+        {% endblock %}
+
+
+        <fieldset id="attic">
+            <input type="checkbox" id="attic-collapse" class="collapse">
+            <legend><label for="attic-collapse">Чердачное помещение</label></legend>
+            <div class="block">
+
+            </div>
+        </fieldset>
+
+        <fieldset id="roof">
+            <input type="checkbox" id="roof-collapse" class="collapse">
+            <legend><label for="roof-collapse">Крыша</label></legend>
+            <div class="block">
+
+            </div>
+        </fieldset>
+
+        <button type="submit">Расчитать</button>
+        {% endblock %}
+    </form>
+{% endblock %}

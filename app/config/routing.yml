@@ -1,0 +1,4 @@
+calc_calc:
+    resource: "@CalcCalcBundle/Resources/config/routing.yml"
+    prefix:   /calc
+

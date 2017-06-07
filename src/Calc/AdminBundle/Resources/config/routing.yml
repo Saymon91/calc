@@ -1,0 +1,7 @@
+calc_admin_homepage:
+    path:     /
+    defaults: { _controller: CalcAdminBundle:Default:index }
+
+calc_admin_homepage_test:
+    path:     /test
+    defaults: { _controller: CalcAdminBundle:Default:test }

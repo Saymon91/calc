@@ -1,0 +1,65 @@
+.collapse {
+    display: none;
+}
+
+fieldset {
+    border: none;
+    /*border-top: 1px solid #ccc;*/
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 15px;
+    background: #fafafa;
+    /*box-shadow: 3px 3px 10px 0 #aaa;*/
+    position: relative;
+    min-height: 30px;
+    padding-top: 30px;
+    padding-left: 20px;
+}
+
+fieldset {
+    width: 100%;
+}
+
+fieldset fieldset {
+    width: calc(100% - 20px);
+}
+
+input[type="checkbox"].collapse + legend {
+    height: 20px;
+    width: calc(100% - 10px);
+    display: block;
+    top: 5px;
+    left: 5px;
+    position: absolute;
+}
+
+legend > label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    text-indent: 40px;
+    cursor: pointer;
+    box-shadow: 0 0 2px 0 #ccc;
+    color: #6c6159;
+}
+
+legend > label:hover {
+    box-shadow: 0 0 2px 1px #ccc inset;
+    color: #000;
+}
+
+input[type="checkbox"].collapse:checked + legend > label {
+    color: #6b9311;
+    box-shadow: 0 0 2px 2px #6b9311;
+}
+
+input[type="checkbox"].collapse:checked + legend + div.block {
+    display: block;
+}
+input[type="checkbox"].collapse + legend + div.block {
+    display: none;
+}
+
+ul, li {
+    display: block;
+}

@@ -1,0 +1,3 @@
+calc_web_homepage:
+    path:     /
+    defaults: { _controller: CalcWebBundle:Default:index }
