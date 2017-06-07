@@ -14,7 +14,7 @@
 {% block content %}
     <form name="calc" method="post" enctype="application/x-www-form-urlencoded" action="javascript:submit(this)">
     {% block editor %}
-        <fieldset>
+        <fieldset id="config">
             <input type="checkbox" id="config-collapse" class="collapse" disabled checked>
             <legend><label for="config-collapse">Этажность</label></legend>
             <div class="block">
@@ -34,45 +34,23 @@
                         <input type="checkbox" id="dimensions-collapse" class="collapse" disabled checked>
                         <legend><label for="dimensions-collapse">Габариты</label></legend>
                         <div class="block">
-                            <label for="dimensions-length">Длина</label><input type="number" name="length" id="dimensions-length">м
-                            <label for="dimensions-width">Ширина</label><input type="number" name="width" id="dimensions-width">м
-                            <label for="dimensions-height">Высота помещений</label><input type="number" name="height" id="dimensions-height">м
+                            <label for="dimensions-length">Длина</label><input type="number" name="length" value=0 id="dimensions-length">м
+                            <label for="dimensions-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-width">м
+                            <label for="dimensions-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-height">м
                             <hr>
-                            <label for="dimensions-area">Площадь</label><input type="number" name="area" id="dimensions-area" disabled>м<sup>2</sup>
+                            <label for="dimensions-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-area" disabled>м<sup>2</sup>
+                            <label for="dimensions-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-area-wet" disabled>м<sup>2</sup>
+                            <label for="dimensions-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-external-r" disabled>м
+                            <label for="dimensions-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-internal-r" disabled>м
+                            <label for="dimensions-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-wet-r" disabled>м
                         </div>
                     {% endblock %}
                 </fieldset>
             </div>
         </fieldset>
 
-        {% block floors %}
-            {% block floor_1 %}
-                {% set floor = 1 %}
-                {% include "CalcCalcBundle:Show:floor.html.twig" %}
-            {% endblock %}
-
-            {% block floor_2 %}
-                {% set floor = 2 %}
-                {% include "CalcCalcBundle:Show:floor.html.twig" %}
-            {% endblock %}
-        {% endblock %}
 
 
-        <fieldset id="attic">
-            <input type="checkbox" id="attic-collapse" class="collapse">
-            <legend><label for="attic-collapse">Чердачное помещение</label></legend>
-            <div class="block">
-
-            </div>
-        </fieldset>
-
-        <fieldset id="roof">
-            <input type="checkbox" id="roof-collapse" class="collapse">
-            <legend><label for="roof-collapse">Крыша</label></legend>
-            <div class="block">
-
-            </div>
-        </fieldset>
 
         <button type="submit">Расчитать</button>
         {% endblock %}

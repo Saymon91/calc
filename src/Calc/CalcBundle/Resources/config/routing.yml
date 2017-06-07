@@ -1,6 +1,12 @@
-calc_api_homepage:
+calc_web_homepage:
     path:     /
     defaults: { _controller: CalcCalcBundle:Web:index }
+    methods: [GET]
+
+calc_web_templates:
+    path:     /templates
+    defaults: { _controller: CalcCalcBundle:Web:templates }
+    methods: [GET]
 
 calc_api_references:
     path:     /references

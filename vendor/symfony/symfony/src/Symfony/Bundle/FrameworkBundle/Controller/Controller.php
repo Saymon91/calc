@@ -193,7 +193,7 @@ class Controller extends ContainerAware
             $response = new Response();
         }
 
-        $response->setContent($this->container->get('twig')->render($view, $parameters));
+        $response->setContent($this->render($view, $parameters));
 
         return $response;
     }
