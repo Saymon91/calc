@@ -63,3 +63,37 @@ input[type="checkbox"].collapse + legend + div.block {
 ul, li {
     display: block;
 }
+
+.options {
+    display: grid;
+    grid-template-columns: 20fr 2fr 1fr 4fr 4fr 1fr;
+}
+
+.options span {
+    border-left: 1px solid #ddd;
+}
+
+.options > span {
+  border-bottom: 1px solid #ddd;
+}
+
+.options span:first-child {
+    border-left: none;
+}
+
+.options:last-child > span {
+    border-bottom: none;
+}
+
+.options > .price,.options > .total {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.options > .price > span,.options > .total > span {
+    width: 50%;
+    display: block;
+    text-align: center;
+}

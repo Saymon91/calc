@@ -19,15 +19,8 @@ class References
         'elements',
         'price_dry',
         'price_wet',
-        'length_koef',
-        'length_degree',
-        'delta_length',
-        'width_koef',
-        'width_degree',
-        'delta_width',
-        'height_koef',
-        'height_degree',
-        'delta_height'
+        'price_formula',
+        'amount_formula'
     ];
 
     /**
@@ -78,49 +71,14 @@ class References
     protected $elements = '';
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="string")
      */
-    protected $length_koef = 0;
+    protected $price_formula = 0;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="string")
      */
-    protected $length_degree = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $delta_length = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $width_koef = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $width_degree = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $delta_width = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $height_koef = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $height_degree = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    protected $delta_height = 0;
+    protected $amount_formula = 0;
 
 
     /**
@@ -318,213 +276,52 @@ class References
     }
 
     /**
-     * Set length_koef
+     * Set price_formula
      *
-     * @param length_koef
+     * @param price_formula
      * @return References
      */
-    public function setLengthKoef(float $length_koef):References
+    public function setPriceFormula(float $price_formula):References
     {
-        $this->length_koef = $length_koef;
+        $this->price_formula = $price_formula;
 
         return $this;
     }
 
     /**
-     * Get length_koef
+     * Get price_formula
      *
-     * @return float
+     * @return string
      */
-    public function getLengthKoef():float
+
+    public function getPriceFormula():float
     {
-        return $this->length_koef;
+        return $this->price_formula;
     }
 
     /**
-     * Set length_degree
+     * Set amount_formula
      *
-     * @param length_degree
+     * @param amount_formula
      * @return References
      */
-    public function setLengthDegree(float $length_degree):References
+    public function setAmountFormula(float $amount_formula):References
     {
-        $this->length_degree = $length_degree;
+        $this->amount_formula = $amount_formula;
 
         return $this;
     }
 
     /**
-     * Get length_degree
+     * Get amount_formula
      *
-     * @return float
+     * @return string
      */
-    public function getLengthDegree():float
+
+    public function getAmountFormula():float
     {
-        return $this->length_degree;
+        return $this->amount_formula;
     }
-
-    /**
-     * Set delta_length
-     *
-     * @param delta_length
-     * @return References
-     */
-    public function setDeltaLength(float $delta_length):References
-    {
-        $this->delta_length = $delta_length;
-
-        return $this;
-    }
-
-    /**
-     * Get delta_length
-     *
-     * @return float
-     */
-    public function getDeltaLength():float
-    {
-        return $this->delta_length;
-    }
-
-    /**
-     * Set width_koef
-     *
-     * @param width_koef
-     * @return References
-     */
-    public function setWidthKoef(float $width_koef):References
-    {
-        $this->width_koef = $width_koef;
-
-        return $this;
-    }
-
-    /**
-     * Get width_koef
-     *
-     * @return float
-     */
-    public function getWidthKoef():float
-    {
-        return $this->width_koef;
-    }
-
-    /**
-     * Set width_degree
-     *
-     * @param width_degree
-     * @return References
-     */
-    public function setWidthDegree(float $width_degree):References
-    {
-        $this->width_degree = $width_degree;
-
-        return $this;
-    }
-
-    /**
-     * Get width_degree
-     *
-     * @return float
-     */
-    public function getWidthDegree():float
-    {
-        return $this->width_degree;
-    }
-
-    /**
-     * Set delta_width
-     *
-     * @param delta_width
-     * @return References
-     */
-    public function setDeltaWidth(float $delta_width):References
-    {
-        $this->delta_width = $delta_width;
-
-        return $this;
-    }
-
-    /**
-     * Get delta_width
-     *
-     * @return float
-     */
-    public function getDeltaWidth():float
-    {
-        return $this->delta_width;
-    }
-
-    /**
-     * Set height_koef
-     *
-     * @param height_koef
-     * @return References
-     */
-    public function setHeightKoef(float $height_koef):References
-    {
-        $this->height_koef = $height_koef;
-
-        return $this;
-    }
-
-    /**
-     * Get height_koef
-     *
-     * @return float
-     */
-    public function getHeightKoef():float
-    {
-        return $this->height_koef;
-    }
-
-    /**
-     * Set height_degree
-     *
-     * @param height_degree
-     * @return References
-     */
-    public function setHeightDegree(float $height_degree):References
-    {
-        $this->height_degree = $height_degree;
-
-        return $this;
-    }
-
-    /**
-     * Get height_degree
-     *
-     * @return float
-     */
-    public function getHeightDegree():float
-    {
-        return $this->height_degree;
-    }
-
-    /**
-     * Set delta_height
-     *
-     * @param delta_height
-     * @return References
-     */
-    public function setDeltaHeight(float $delta_height):References
-    {
-        $this->delta_height = $delta_height;
-
-        return $this;
-    }
-
-    /**
-     * Get delta_height
-     *
-     * @return float
-     */
-    public function getDeltaHeight():float
-    {
-        return $this->delta_height;
-    }
-
-
 
     public function getFields(array $fields = self::FIELDS):array
     {

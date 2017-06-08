@@ -39,7 +39,7 @@
       this.elements = {};
       this.references = {};
       this.templates = {};
-      this.elementsTypes = new Set();
+      this.elementsTypes = new Map();
       this.elements.body = $(body);
 
       this.parameters = {};
@@ -73,8 +73,63 @@
 
         internalR: content.find('#dimensions-internal-r'),
         externalR: content.find('#dimensions-external-r'),
-        wetR     : content.find('#dimensions-wet-r')
+        wetR     : content.find('#dimensions-wet-r'),
+
+        optionsBlock: content.find('#parameters').find('.block'),
       });
+
+      const elements = this.elementsTypes.keys();
+      for (const element of elements) {
+        if (element === 'floors') {
+          const floors = Math.floor(this.elements.floors.val());
+          for (let index = 0; index < floors; ++index) {
+            const block = this.templates.options.clone().appendTo(this.elements.optionsBlock);
+            this.elements[`options-${element}`] = block;
+            block.find('input[type="checkbox"].collapse').prop('id', `options-${element}-collapse`);
+            block.find('label').prop('for', `options-${element}-collapse`).text(element);
+            const list = block.find('.required').find('ul');
+            const elementItems = this.elementsTypes.get(element).values();
+            for (const option of elementItems) {
+              const item = this.templates.option.clone().appendTo(list);
+              item.prop('id', `${element}-${index}-${option.id}`);
+              item.addClass(`${element}-${option.id}`);
+              item.find('currency').text(option.currency || 'р');
+              item.find('.name').text(option.name);
+              item.find('.count').text('0.00');
+              item.find('.unit').text(option.unit || 'м');
+              const price = item.find('.price');
+              price.find('.dry').text(option.price_dry);
+              price.find('.wet').text(option.price_wet);
+              const total = item.find('.total');
+              total.find('.dry').text(0);
+              total.find('.wet').text(0);
+            }
+          }
+          continue;
+        }
+
+        const block = this.templates.options.clone().appendTo(this.elements.optionsBlock);
+        this.elements[`options-${element}`] = block;
+        block.find('input[type="checkbox"].collapse').prop('id', `options-${element}-collapse`);
+        block.find('label').prop('for', `options-${element}-collapse`).text(element);
+        const list = block.find('.required').find('ul');
+        const elementItems = this.elementsTypes.get(element).values();
+        for (const option of elementItems) {
+          const item = this.templates.option.clone().appendTo(list);
+          item.prop('id', `${element}-${option.id}`);
+          item.addClass(`${element}-${option.id}`);
+          item.find('.name').text(option.name);
+          item.find('.count').text('0.00');
+          item.find('.unit').text(option.unit || 'м');
+          const price = item.find('.price');
+          price.find('.dry').text(option.price_dry);
+          price.find('.wet').text(option.price_wet);
+          const total = item.find('.total-price');
+          total.find('.dry').text(0);
+          total.find('.wet').text(0);
+          item.find('.currency').text('р');
+        }
+      }
 
       this.elements.length.bind('change', () => {
         this.build({ length: this.elements.length.val() });
@@ -114,7 +169,15 @@
 
     calcOptions() {
       for (const id in this.references) {
-        this.references[id].calc(this.references[id], this.parameters)
+        const { elements, calcCount, calcPrice } = this.references[id];
+        const options = this.elements.optionsBlock.find(`.${elements}-${id}`);
+        const context = Object.assign({}, this.parameters, this.references[id]);
+        options.find('.count').text((context.count = (calcCount.call(context) || 0).toFixed(2)));
+        const total = options.find('.total');
+        total.find('.dry').text(calcPrice.call(context, 'dry').toFixed(2));
+        console.log(calcPrice.toString(),context);
+        total.find('.wet').text(calcPrice.call(context, 'wet').toFixed(2));
+        console.log(calcPrice.toString(),context);
       }
     }
 
@@ -126,11 +189,16 @@
 
       this.references = {};
       for (const option of data) {
-        option.
+        option.calcCount = new Function('type', option.amount_formula ? `return ${option.amount_formula.replace(/:/g, 'this.')}` : `return 0`);
+        option.calcPrice = new Function('type', option.price_formula ? `return ${option.price_formula.replace(/:/g, 'this.').replace(/\.price/g, '["price_" + type]')}` : `return this['price_' + type]`);
         this.references[option.id] = option;
-
-        this.elementsTypes.add(option.elements);
+        if (!this.elementsTypes.has(option.elements)) {
+          this.elementsTypes.set(option.elements, new Set());
+        }
+        this.elementsTypes.get(option.elements).add(option);
       }
+
+      window.references = this.references;
       return this.references;
     };
 

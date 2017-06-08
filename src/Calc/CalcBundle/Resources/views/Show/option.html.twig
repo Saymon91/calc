@@ -1,7 +1,14 @@
 <li class="options">
     <span class="name"></span>
-    {% if user == 'admin' %}
-        <span class="price"></span>
-        <span class="currency"></span>
-    {% endif %}
+    <span class="count"></span>
+    <span class="unit"></span>
+{% if user == 'admin' %}
+    <span class="price">
+        <span class="wet"></span><span class="dry"></span>
+    </span>
+{% endif %}
+    <span class="total">
+        <span class="wet"></span><span class="dry"></span>
+    </span>
+    <span class="currency"></span>
 </li>
