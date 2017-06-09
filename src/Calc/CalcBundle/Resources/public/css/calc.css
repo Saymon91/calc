@@ -69,19 +69,19 @@ ul, li {
     grid-template-columns: 20fr 2fr 1fr 4fr 4fr 1fr;
 }
 
-.options span {
+.options div {
     border-left: 1px solid #ddd;
 }
 
-.options > span {
+.options > div {
   border-bottom: 1px solid #ddd;
 }
 
-.options span:first-child {
+.options div:first-child {
     border-left: none;
 }
 
-.options:last-child > span {
+.options:last-child > div {
     border-bottom: none;
 }
 
@@ -96,4 +96,9 @@ ul, li {
     width: 50%;
     display: block;
     text-align: center;
+}
+
+.grid {
+    height: 400px;
+    width: 100%;
 }

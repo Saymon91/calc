@@ -1,38 +1,60 @@
 (() => {
 
-  class Api {
-    static async call(method, url, query, reject) {
-      if (!Api.ALLOWED_METHODS.includes(method)) {
-        const error = new Error('Not allowed method');
-        return reject instanceof Function ? reject(error) : Request.error(error)
-      }
+  const GRID_OPTIONS = {
+    enableCellNavigation: true,
+    enableColumnReorder : false
+  };
 
-      const call = fetch(new Request(url, { method, body: query }));
-      if (reject instanceof Function) {
-        call.catch(reject);
-      }
-
-      return call.then(resp => resp.json());
+  const OPTIONS_COLUMNS = [
+    {
+      name    : 'name',
+      field   : 'name',
+      id      : 'name',
+      sortable: true,
+      cssClass: 'name',
+      headerCssClass: 'name'
+    },
+    {
+      name    : 'count',
+      field   : 'count',
+      id      : 'count',
+      sortable: true,
+      cssClass: 'count',
+      headerCssClass: 'count'
+    },
+    {
+      name    : 'unit',
+      field   : 'unit',
+      id      : 'unit',
+      sortable: false,
+      cssClass: 'unit',
+      headerCssClass: 'unit'
+    },
+    {
+      name    : 'price',
+      field   : 'price',
+      id      : 'price',
+      sortable: true,
+      cssClass: 'price',
+      headerCssClass: 'price',
+    },
+    {
+      name    : 'total',
+      field   : 'total',
+      id      : 'total',
+      sortable: true,
+      cssClass: 'total',
+      headerCssClass: 'total'
+    },
+    {
+      name    : 'currency',
+      field   : 'currency',
+      id      : 'currency',
+      sortable: true,
+      cssClass: 'currency',
+      headerCssClass: 'currency'
     }
-    static async get(url, query = {}, reject = null) {
-      return Api.call('GET', url, query, reject);
-    }
-
-    static async post(url, query = {}, reject = null) {
-      return Api.call('POST', url, query, reject);
-    }
-
-    static async patch(url, query = {}, reject = null) {
-      return Api.call('PATCH', url, query, reject);
-    }
-
-    static async delete(url, query = {}, reject = null) {
-      return Api.call('DELETE', url, query, reject);
-    }
-
-  }
-
-  Api.ALLOWED_METHODS = ['GET', 'POST', 'PATCH', 'DELETE'];
+  ];
 
   class App {
     constructor(body) {
@@ -44,16 +66,37 @@
 
       this.parameters = {};
 
+      this.formatters = {
+        price(row, col, { dry, wet }, itemOptions) {
+          const template = this.templates.option.find(`.${itemOptions.cssClass}`).clone();
+          template.find('.dry').text((dry || 0).toFixed(2));
+          template.find('.wet').text((wet || 0).toFixed(2));
+          return template.html();
+        },
+
+        total(row, col, { dry, wet }, itemOptions) {
+          const template = this.templates.option.find(`.${itemOptions.cssClass}`).clone();
+          template.find('.dry').text((dry || 0).toFixed(2));
+          template.find('.wet').text((wet || 0).toFixed(2));
+          return template.html();
+        }
+      };
+
       this.init();
     }
 
     async init() {
+      for (const options of OPTIONS_COLUMNS) {
+        if (this.formatters[options.field]) {
+          options.formatter = this.formatters[options.field].bind(this);
+        }
+      }
+
       await Promise.all([
         this.loadReferences(),
         this.loadTemplates()
       ]);
       this.mount();
-      console.log(this);
     }
 
     mount() {
@@ -87,47 +130,32 @@
             this.elements[`options-${element}`] = block;
             block.find('input[type="checkbox"].collapse').prop('id', `options-${element}-collapse`);
             block.find('label').prop('for', `options-${element}-collapse`).text(element);
-            const list = block.find('.required').find('ul');
+
+            const options = [];
             const elementItems = this.elementsTypes.get(element).values();
             for (const option of elementItems) {
-              const item = this.templates.option.clone().appendTo(list);
-              item.prop('id', `${element}-${index}-${option.id}`);
-              item.addClass(`${element}-${option.id}`);
-              item.find('currency').text(option.currency || 'р');
-              item.find('.name').text(option.name);
-              item.find('.count').text('0.00');
-              item.find('.unit').text(option.unit || 'м');
-              const price = item.find('.price');
-              price.find('.dry').text(option.price_dry);
-              price.find('.wet').text(option.price_wet);
-              const total = item.find('.total');
-              total.find('.dry').text(0);
-              total.find('.wet').text(0);
+              options.push({
+                id  : option.id,
+                name: option.name,
+                count: option.count,
+                unit: option.unit,
+                price: { dry: option.price_dry, wet: option.price_wet },
+                total: { dry: '0.00', wet: '0.00' }
+              });
             }
+
+            console.log(options);
+            const list = block.find('.required').find('.grid');
+            const grid = new Slick.Grid(list, options, OPTIONS_COLUMNS, Object.assign(GRID_OPTIONS, {
+              defaultFormatter: (row, col, value, itemOptions) => {
+                const template = this.templates.option.find(`.${itemOptions.cssClass}`).clone();
+                return template.text(value).html();
+              }
+            }));
+            list.find('.grid-canvas').children().addClass('options');
+
           }
           continue;
-        }
-
-        const block = this.templates.options.clone().appendTo(this.elements.optionsBlock);
-        this.elements[`options-${element}`] = block;
-        block.find('input[type="checkbox"].collapse').prop('id', `options-${element}-collapse`);
-        block.find('label').prop('for', `options-${element}-collapse`).text(element);
-        const list = block.find('.required').find('ul');
-        const elementItems = this.elementsTypes.get(element).values();
-        for (const option of elementItems) {
-          const item = this.templates.option.clone().appendTo(list);
-          item.prop('id', `${element}-${option.id}`);
-          item.addClass(`${element}-${option.id}`);
-          item.find('.name').text(option.name);
-          item.find('.count').text('0.00');
-          item.find('.unit').text(option.unit || 'м');
-          const price = item.find('.price');
-          price.find('.dry').text(option.price_dry);
-          price.find('.wet').text(option.price_wet);
-          const total = item.find('.total-price');
-          total.find('.dry').text(0);
-          total.find('.wet').text(0);
-          item.find('.currency').text('р');
         }
       }
 
