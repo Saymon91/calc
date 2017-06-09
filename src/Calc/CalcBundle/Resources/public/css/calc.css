@@ -67,22 +67,44 @@ ul, li {
 .options {
     display: grid;
     grid-template-columns: 20fr 2fr 1fr 4fr 4fr 1fr;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
 }
 
 .options span {
     border-left: 1px solid #ddd;
 }
 
-.options > span {
-  border-bottom: 1px solid #ddd;
-}
 
 .options span:first-child {
     border-left: none;
 }
 
-.options:last-child > span {
+.options:last-child {
     border-bottom: none;
+}
+
+.options:hover {
+    box-shadow: 1px 1px 6px 1px #ccc;
+    z-index: 2;
+    background: #fff;
+    height: 25px;
+    transition-duration: 0.2s;
+    line-height: 25px;
+}
+
+.options:hover span {
+    font-size: 1.02em;
+    color: #222222;
+}
+
+.options * {
+    line-height: inherit;
+    height: 100%;
+}
+
+.options > .name {
+    text-indent: 20px;
 }
 
 .options > .price,.options > .total {
