@@ -7,6 +7,7 @@
 
 {%  block scripts %}
     <script type="application/javascript" src="{{ asset('bundles/calccalc/js/select2.full.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/grid.js') }}"></script>
     <script type="application/javascript" src="{{ asset('bundles/calccalc/js/calc.js') }}"></script>
 {% endblock %}
 {% block header %}Калькулятор стоимости{% endblock %}
@@ -58,4 +59,19 @@
         <button type="submit">Расчитать</button>
         {% endblock %}
     </form>
+
+    <div class="test-grid" style="height: 400px;"></div>
+    <script>
+        /*
+        const data = [];
+        for (let i = 0; i < 1677680; i++) {
+          data.push({ data: {id: i, name: `name_${i}`}});
+        }
+        const testGrid = $(document.body).find('.test-grid');
+        new Grid(testGrid, ['id', 'name'], data, {
+          rowHeight: 20,
+          headerHeight: 25,
+          templateRow: $('<div><span class="id"></span><span class="name"></span></div>')
+        });*/
+    </script>
 {% endblock %}

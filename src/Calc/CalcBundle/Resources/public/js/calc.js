@@ -1,39 +1,4 @@
 (() => {
-
-  class Api {
-    static async call(method, url, query, reject) {
-      if (!Api.ALLOWED_METHODS.includes(method)) {
-        const error = new Error('Not allowed method');
-        return reject instanceof Function ? reject(error) : Request.error(error)
-      }
-
-      const call = fetch(new Request(url, { method, body: query }));
-      if (reject instanceof Function) {
-        call.catch(reject);
-      }
-
-      return call.then(resp => resp.json());
-    }
-    static async get(url, query = {}, reject = null) {
-      return Api.call('GET', url, query, reject);
-    }
-
-    static async post(url, query = {}, reject = null) {
-      return Api.call('POST', url, query, reject);
-    }
-
-    static async patch(url, query = {}, reject = null) {
-      return Api.call('PATCH', url, query, reject);
-    }
-
-    static async delete(url, query = {}, reject = null) {
-      return Api.call('DELETE', url, query, reject);
-    }
-
-  }
-
-  Api.ALLOWED_METHODS = ['GET', 'POST', 'PATCH', 'DELETE'];
-
   class App {
     constructor(body) {
       this.elements = {};
@@ -85,25 +50,24 @@
           for (let index = 0; index < floors; ++index) {
             const block = this.templates.options.clone().appendTo(this.elements.optionsBlock);
             this.elements[`options-${element}`] = block;
-            block.find('input[type="checkbox"].collapse').prop('id', `options-${element}-collapse`);
+            const checkbox = block
+              .find('input[type="checkbox"].collapse')
+              .prop('id', `options-${element}-collapse`);
             block.find('label').prop('for', `options-${element}-collapse`).text(element);
-            const list = block.find('.required').find('ul');
+
             const elementItems = this.elementsTypes.get(element).values();
+            const data = [];
             for (const option of elementItems) {
-              const item = this.templates.option.clone().appendTo(list);
-              item.prop('id', `${element}-${index}-${option.id}`);
-              item.addClass(`${element}-${option.id}`);
-              item.find('currency').text(option.currency || 'р');
-              item.find('.name').text(option.name);
-              item.find('.count').text('0.00');
-              item.find('.unit').text(option.unit || 'м');
-              const price = item.find('.price');
-              price.find('.dry').text(option.price_dry);
-              price.find('.wet').text(option.price_wet);
-              const total = item.find('.total');
-              total.find('.dry').text(0);
-              total.find('.wet').text(0);
+              data.push({ data: option });
             }
+
+            const grid = this.createGrid(block.find('.required').find('div'), data);
+            checkbox.on('change', () => {
+              console.log('change');
+              grid.mount();
+              grid.render();
+            });
+
           }
           continue;
         }
@@ -112,23 +76,12 @@
         this.elements[`options-${element}`] = block;
         block.find('input[type="checkbox"].collapse').prop('id', `options-${element}-collapse`);
         block.find('label').prop('for', `options-${element}-collapse`).text(element);
-        const list = block.find('.required').find('ul');
         const elementItems = this.elementsTypes.get(element).values();
+        const data = [];
         for (const option of elementItems) {
-          const item = this.templates.option.clone().appendTo(list);
-          item.prop('id', `${element}-${option.id}`);
-          item.addClass(`${element}-${option.id}`);
-          item.find('.name').text(option.name);
-          item.find('.count').text('0.00');
-          item.find('.unit').text(option.unit || 'м');
-          const price = item.find('.price');
-          price.find('.dry').text(option.price_dry);
-          price.find('.wet').text(option.price_wet);
-          const total = item.find('.total-price');
-          total.find('.dry').text(0);
-          total.find('.wet').text(0);
-          item.find('.currency').text('р');
+          data.push({ data: option });
         }
+        this.createGrid(block.find('.required').find('div'), data);
       }
 
       this.elements.length.bind('change', () => {
@@ -142,6 +95,37 @@
       });
       this.elements.floors.bind('change', () => {
         this.build({ floors: this.elements.floors.filter(':checked').val() });
+      });
+    }
+
+    createGrid(container, data) {
+      const columns = [
+        'name',
+        'count',
+        'unit',
+        {
+          name : 'price',
+          field: 'price',
+          cellFormatter: (row, item, key) => {
+            const { dry, wet } = item[key];
+            $(row).find(`.${key}`).find('.wet').text((wet || 0).toFixed(2));
+            $(row).find(`.${key}`).find('.dry').text((dry || 0).toFixed(2));
+          }
+        },
+        {
+          name: 'total',
+          field: 'total',
+          cellFormatter: (row, item, key) => {
+            const { dry, wet } = item[key];
+            $(row).find(`.${key}`).find('.wet').text((wet || 0).toFixed(2));
+            $(row).find(`.${key}`).find('.dry').text((dry || 0).toFixed(2));
+          }
+        }, 'currency'
+      ];
+      return new Grid(container, columns, data, {
+        id: 'id',
+        templateRow: this.templates.option,
+        templateHeader: this.templates.option,
       });
     }
 
@@ -198,7 +182,6 @@
         this.elementsTypes.get(option.elements).add(option);
       }
 
-      window.references = this.references;
       return this.references;
     };
 
