@@ -142,7 +142,7 @@
               wet: calcPrice.call(context, 'wet'),
               dry: calcPrice.call(context, 'dry')
             };
-            console.log(Object.assign({}, context, { total: item.total }), source);
+
             $(row).find(`.${key}`).find('.wet').text((item.total.wet || 0).toFixed(2));
             $(row).find(`.${key}`).find('.dry').text((item.total.dry || 0).toFixed(2));
           }

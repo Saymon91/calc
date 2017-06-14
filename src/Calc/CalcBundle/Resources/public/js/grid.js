@@ -82,7 +82,7 @@ class Grid {
 
     this.startListPosition = this.elements.listBackground.offset().top;
     this.position = Math.abs(this.startListPosition - this.elements.listBackground.offset().top);
-    this.maxPosition = this.position - this.elements.listBackground.height();
+    this.maxPosition = this.startListPosition - this.elements.listBackground.height() + this.elements.elements.height();
     console.log('mount', this.startListPosition, this.position, this.maxPosition);
   }
 
@@ -170,10 +170,11 @@ class Grid {
     this.elements.list.on('scroll', () => {
       this.renderAwait && clearTimeout(this.renderAwait);
       this.renderAwait = setTimeout(() => {
-        this.position = Math.abs(this.startListPosition - this.elements.listBackground.offset().top);
-        if (this.position < this.maxPosition) {
-          this.position = this.maxPosition;
+        let { top } = this.elements.listBackground.offset();
+        if (top < this.maxPosition) {
+          top = this.maxPosition;
         }
+        this.position = Math.abs(this.startListPosition - top);
         this.elements.elements.css('top', this.position);
         this.render();
       }, this.options.renderTimeout);
