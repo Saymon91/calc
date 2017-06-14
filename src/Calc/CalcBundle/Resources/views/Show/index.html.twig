@@ -30,23 +30,38 @@
                         </div>
                     {% endblock %}
                 </fieldset>
-                <fieldset>
-                    {% block dimensions %}
-                        <input type="checkbox" id="dimensions-collapse" class="collapse" disabled checked>
-                        <legend><label for="dimensions-collapse">Габариты</label></legend>
+                {% block dimensions %}
+                    <fieldset id="dimensions-floor1">
+                        <input type="checkbox" id="dimensions-floor1-collapse" class="collapse" disabled checked>
+                        <legend><label for="dimensions-floor1-collapse">Габариты 1 этаж</label></legend>
                         <div class="block">
-                            <label for="dimensions-length">Длина</label><input type="number" name="length" value=0 id="dimensions-length">м
-                            <label for="dimensions-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-width">м
-                            <label for="dimensions-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-height">м
+                            <label for="dimensions-floor1-length">Длина</label><input type="number" name="length" value=0 id="dimensions-floor1-length">м
+                            <label for="dimensions-floor1-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-floor1-width">м
+                            <label for="dimensions-floor1-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-floor1-height">м
                             <hr>
-                            <label for="dimensions-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-area" disabled>м<sup>2</sup>
-                            <label for="dimensions-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-area-wet" disabled>м<sup>2</sup>
-                            <label for="dimensions-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-external-r" disabled>м
-                            <label for="dimensions-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-internal-r" disabled>м
-                            <label for="dimensions-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-wet-r" disabled>м
+                            <label for="dimensions-floor1-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-floor1-area" disabled>м<sup>2</sup>
+                            <label for="dimensions-floor1-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-floor1-area-wet" disabled>м<sup>2</sup>
+                            <label for="dimensions-floor1-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-floor1-external-r" disabled>м
+                            <label for="dimensions-floor1-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-floor1-internal-r" disabled>м
+                            <label for="dimensions-floor1-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-floor1-wet-r" disabled>м
                         </div>
-                    {% endblock %}
-                </fieldset>
+                    </fieldset>
+                    <fieldset id="dimensions-floor2" style="display: none">
+                        <input type="checkbox" id="dimensions-floor2-collapse" class="collapse" disabled checked>
+                        <legend><label for="dimensions-floor2-collapse">Габариты 2 этаж</label></legend>
+                        <div class="block">
+                            <label for="dimensions-floor2-length">Длина</label><input type="number" name="length" value=0 id="dimensions-floor2-length">м
+                            <label for="dimensions-floor2-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-floor2-width">м
+                            <label for="dimensions-floor2-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-floor2-height">м
+                            <hr>
+                            <label for="dimensions-floor2-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-floor2-area" disabled>м<sup>2</sup>
+                            <label for="dimensions-floor2-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-floor2-area-wet" disabled>м<sup>2</sup>
+                            <label for="dimensions-floor2-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-floor2-external-r" disabled>м
+                            <label for="dimensions-floor2-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-floor2-internal-r" disabled>м
+                            <label for="dimensions-floor2-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-floor2-wet-r" disabled>м
+                        </div>
+                    </fieldset>
+                {% endblock %}
             </div>
         </fieldset>
 
@@ -59,19 +74,4 @@
         <button type="submit">Расчитать</button>
         {% endblock %}
     </form>
-
-    <div class="test-grid" style="height: 400px;"></div>
-    <script>
-        /*
-        const data = [];
-        for (let i = 0; i < 1677680; i++) {
-          data.push({ data: {id: i, name: `name_${i}`}});
-        }
-        const testGrid = $(document.body).find('.test-grid');
-        new Grid(testGrid, ['id', 'name'], data, {
-          rowHeight: 20,
-          headerHeight: 25,
-          templateRow: $('<div><span class="id"></span><span class="name"></span></div>')
-        });*/
-    </script>
 {% endblock %}

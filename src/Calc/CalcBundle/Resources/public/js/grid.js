@@ -82,7 +82,8 @@ class Grid {
 
     this.startListPosition = this.elements.listBackground.offset().top;
     this.position = Math.abs(this.startListPosition - this.elements.listBackground.offset().top);
-    console.log('mount', this.startListPosition, this.position);
+    this.maxPosition = this.position - this.elements.listBackground.height();
+    console.log('mount', this.startListPosition, this.position, this.maxPosition);
   }
 
   mountContainer() {
@@ -106,13 +107,13 @@ class Grid {
       return;
     }
 
-    if (this.options.templateHeader) {
-      this.elements.header = $(this.options.templateHeader).appendTo(this.elements.grid);
+    if (this.options.headerTemplate) {
+      this.elements.header = $(this.options.headerTemplate).appendTo(this.elements.grid);
     } else {
       this.elements.header = $('<div></div>').appendTo(this.elements.grid);
     }
 
-    if (!this.options.templateHeader) {
+    if (!this.options.headerTemplate) {
       this.elements.header
         .css({}, DEFAULT_HEADER_STYLE, this.options.headerStyle || {})
         .height(this.options.headerHeight)
@@ -170,6 +171,9 @@ class Grid {
       this.renderAwait && clearTimeout(this.renderAwait);
       this.renderAwait = setTimeout(() => {
         this.position = Math.abs(this.startListPosition - this.elements.listBackground.offset().top);
+        if (this.position < this.maxPosition) {
+          this.position = this.maxPosition;
+        }
         this.elements.elements.css('top', this.position);
         this.render();
       }, this.options.renderTimeout);
@@ -180,12 +184,10 @@ class Grid {
     this.elements.elements.empty();
     const start = Math.floor(this.position / this.options.rowHeight);
     let finish = start + this.elementsCount;
-    console.log('render', start, finish, this.data.length);
     if (finish > this.data.length) {
       finish = this.data.length;
     }
     for (let index = start; index < finish; index++) {
-      console.log(index);
       this.renderItem(index);
     }
   }
@@ -197,21 +199,32 @@ class Grid {
       return;
     }
 
-    if (this.options.templateRow) {
-      const template = $(this.options.templateRow).clone();
-      for (const column of this.columns) {
-        if (typeof column === 'string') {
-          template.find(`.${column}`).text(item.data[column]);
-          continue;
-        }
-
-        const { id, name, field, cellRender } = column;
-        const columnName = field || id || name;
-        if (cellRender instanceof Function) {
-          cellRender(template, item.data, columnName);
-        }
-      }
-      this.elements.elements.append(template);
+    let template;
+    if (this.options.rowTemplate) {
+      template = $(this.options.rowTemplate).clone();
+    } else {
+      template = $('<div></div>');
     }
+
+    for (const column of this.columns) {
+      if (typeof column === 'string') {
+        template.find(`.${column}`).text(item.data[column]);
+        continue;
+      }
+
+      const { id, name, field, cellFormatter } = column;
+      const columnName = field || id || name;
+      if (cellFormatter instanceof Function) {
+        cellFormatter(template, item.data, columnName);
+      } else {
+        template.find(`.${columnName}`).text(item.data[columnName]);
+      }
+
+    }
+    this.elements.elements.append(template);
+  }
+
+  destruct() {
+    this.elements.grid.empty().remove();
   }
 }
