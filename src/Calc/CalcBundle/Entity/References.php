@@ -14,9 +14,6 @@ class References
         'name',
         'unit',
         'currency',
-        'categories',
-        'required',
-        'elements',
         'price_dry',
         'price_wet',
         'price_formula',
@@ -54,21 +51,6 @@ class References
      * @ORM\Column(type="string")
      */
     protected $currency = '';
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $categories = '';
-
-    /**
-     * @ORM\Column(type="integer", length=1)
-     */
-    protected $required = 0;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    protected $elements = '';
 
     /**
      * @ORM\Column(type="string")
@@ -204,75 +186,6 @@ class References
     public function getCurrency():string
     {
         return $this->currency;
-    }
-
-    /**
-     * Set categories
-     *
-     * @param string $categories
-     * @return References
-     */
-    public function setCategories(string $categories):References
-    {
-        $this->categories = $categories;
-
-        return $this;
-    }
-
-    /**
-     * Get categories
-     *
-     * @return string 
-     */
-    public function getCategories():string
-    {
-        return $this->categories;
-    }
-
-    /**
-     * Set required
-     *
-     * @param integer $required
-     * @return References
-     */
-    public function setRequired(int $required):References
-    {
-        $this->required = $required;
-
-        return $this;
-    }
-
-    /**
-     * Get required
-     *
-     * @return integer 
-     */
-    public function getRequired():int
-    {
-        return $this->required;
-    }
-
-    /**
-     * Set elements
-     *
-     * @param string $elements
-     * @return References
-     */
-    public function setElements(string $elements):References
-    {
-        $this->elements = $elements;
-
-        return $this;
-    }
-
-    /**
-     * Get elements
-     *
-     * @return string 
-     */
-    public function getElements():string
-    {
-        return $this->elements;
     }
 
     /**

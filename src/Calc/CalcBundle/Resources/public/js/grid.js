@@ -12,9 +12,9 @@ const DEFAULT_OPTIONS = {
   footerHeight: 20,
 
   // include options
-  filters: false,
-  footer : false,
-  header : true,
+  includeFilters: false,
+  includeFooter : false,
+  includeHeader : true,
 
   // formatters
   rowFormatter   : null,
@@ -24,8 +24,16 @@ const DEFAULT_OPTIONS = {
   footerFormatter: null,
   editorFormatter: null,
 
+  // renders
+  rowRender    : null,
+  headerRender : null,
+  filtersRender: null,
+  footerRender : null,
+  editorRender: null,
+
   // templates
   rowTemplate   : $('<div></div>'),
+  cellTemplate  : $('<div></div>'),
   headerTemplate: $('<div></div>'),
   filterTemplate: $('<div></div>'),
   footerTemplate: $('<div></div>'),
@@ -57,7 +65,7 @@ const DEFAULT_LIST_STYLE = {
 };
 
 class Grid {
-  constructor(container, columns, data , options) {
+  constructor(container, columns, data = [], options = {}) {
     Object.assign(this, { data, columns, options: Object.assign({}, DEFAULT_OPTIONS, options) });
     this.elements = {
       container: $(container)
@@ -68,22 +76,20 @@ class Grid {
 
     this.renderAwait = null;
 
+    this.displayItems = [];
+    this.filtered = [];
+    this.selected = [];
+
     this.mount();
     this.render();
   }
 
   mount() {
     this.mountContainer();
-    this.mountHeader();
-    if (this.options.rowFilters) {
-      this.mountFilter();
-    }
+    this.options.includeHeader &&this.mountHeader();
+    this.options.includeFilters && this.mountFilter();
     this.mountList();
-
-    this.startListPosition = this.elements.listBackground.offset().top;
-    this.position = Math.abs(this.startListPosition - this.elements.listBackground.offset().top);
-    this.maxPosition = this.startListPosition - this.elements.listBackground.height() + this.elements.elements.height();
-    console.log('mount', this.startListPosition, this.position, this.maxPosition);
+    this.options.includeFooter && this.mountFooter();
   }
 
   mountContainer() {
@@ -94,11 +100,30 @@ class Grid {
       .addClass('grid')
       .css(Object.assign({}, DEFAULT_GRID_STYLE, this.options.gridStyle || {}))
       .appendTo(this.elements.container);
-    const height = this.elements.grid.height();
-    const gridTemplate = this.options.rowFilters
-      ? `${this.options.headerHeight}px ${this.options.filterHeight}px ${height - this.options.headerHeight - this.options.filterHeight}px`
-      : `${this.options.headerHeight}px ${height - this.options.headerHeight}px`;
-    this.elements.grid.css('grid-template-rows', gridTemplate);
+
+    let height = this.elements.grid.height();
+    let gridTemplate = '';
+
+    if (this.options.includeHeader) {
+      height -= this.options.headerHeight;
+      gridTemplate += `${this.options.headerHeight}px `;
+    }
+
+    if (this.options.includeFilters) {
+      height -= this.options.filterHeight;
+      gridTemplate += `${this.options.filterHeight}px `;
+    }
+    if (this.options.includeFooter) {
+      height -= this.options.footerHeight;
+    }
+
+    gridTemplate += `${height}px `;
+
+    if (this.options.includeFooter) {
+      gridTemplate += ` ${this.options.footerHeight}px`;
+    }
+
+    this.elements.grid.css('grid-template-rows', gridTemplate.trim());
   }
 
   mountHeader() {
@@ -150,8 +175,8 @@ class Grid {
       .addClass('grid-list-background')
       .css({
         width   : '100%',
-        position: 'relative',
-        height  : `${this.data.length * this.options.rowHeight}px` })
+        position: 'relative'
+      })
       .appendTo(this.elements.list);
     const elementsBlockHeight = this.elements.list.height();
     this.elementsCount = elementsBlockHeight / this.options.rowHeight;
@@ -179,6 +204,24 @@ class Grid {
         this.render();
       }, this.options.renderTimeout);
     });
+
+    this.calcList();
+  }
+
+  calcList() {
+    const listBackgroundHeight = this.data.length * this.options.rowHeight;
+    this.elements.listBackground.height(listBackgroundHeight);
+    this.startListPosition = this.elements.listBackground.offset().top;
+    this.position = Math.abs(this.startListPosition - this.elements.listBackground.offset().top);
+    this.maxPosition = this.startListPosition - listBackgroundHeight + this.elements.elements.height();
+  }
+
+  mountFooter() {
+    const template = this.options.footerTemplate;
+    this.elements.footer = this.options.grid.append(template);
+    this.elements.footer
+      .addClass('grid-footer')
+      .height(this.options.footerHeight);
   }
 
   render() {
@@ -188,24 +231,33 @@ class Grid {
     if (finish > this.data.length) {
       finish = this.data.length;
     }
-    for (let index = start; index < finish; index++) {
-      this.renderItem(index);
+
+    for (let index = 0, length = this.displayItems.length; index < length; index++) {
+      this.displayItems[index].template.remove();
     }
+
+    for (let index = start; index < finish; index++) {
+      const item = this.renderItem(index);
+      item.template.appendTo(this.elements.elements);
+      this.displayItems.push(item);
+    }
+
+    this.options.includeFooter && this.renderFooter();
   }
 
   renderItem(id) {
     const item = this.data[id];
-    if (item.render) {
-      this.elements.elements.append(item.render(item));
-      return;
+    if (item.render instanceof Function) {
+      item.template = item.render(item.data);
+      return item
     }
 
-    let template;
-    if (this.options.rowTemplate) {
-      template = $(this.options.rowTemplate).clone();
-    } else {
-      template = $('<div></div>');
+    if (this.options.rowRender instanceof Function) {
+      item.template = this.options.rowRender(item.data);
+      return item;
     }
+
+    const template = $(this.options.rowTemplate).clone();
 
     for (const column of this.columns) {
       if (typeof column === 'string') {
@@ -220,12 +272,35 @@ class Grid {
       } else {
         template.find(`.${columnName}`).text(item.data[columnName]);
       }
-
     }
-    this.elements.elements.append(template);
+
+    item.template = template;
+    return item;
+  }
+
+  renderFooter() {
+    if (this.options.footerFormatter instanceof Function) {
+      this.options.footerFormatter(this.elements.footer, this);
+    }
   }
 
   destruct() {
+    this.data = [];
+    this.displayItems = [];
+    this.selected = [];
+    this.filtered = [];
+    this.elements = {};
+    this.options = Object.assign({}, DEFAULT_OPTIONS);
     this.elements.grid.empty().remove();
+  }
+
+  removeItem(id) {
+
+  }
+
+  addItem(item) {
+    this.data.push(item);
+    this.calcList();
+    this.elements.list.scrollTop(this.startListPosition - this.maxPosition);
   }
 }
