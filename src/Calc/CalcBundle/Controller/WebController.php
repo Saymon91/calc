@@ -8,7 +8,6 @@ class WebController extends ReferencesController
     public function indexAction():Response
     {
         $parameters = [];
-        $references = $this->getReferences();
         $parameters['user'] = 'admin';
 
         return $this->render('CalcCalcBundle:Show:index.html.twig', $parameters, new Response(null, 200));

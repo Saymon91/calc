@@ -1,0 +1,34 @@
+{% extends "CalcCalcBundle:Show:base.html.twig" %}
+
+{% block title %}Калькулятор стоимости{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/calccalc/css/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/calccalc/css/select2.min.css') }}">
+{% endblock %}
+
+{%  block scripts %}
+    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/select2.full.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/admin.elements.js') }}"></script>
+{% endblock %}
+{% block header %}Панель администрирования{% endblock %}
+
+{% block content %}
+    <nav>
+        <ul>
+            <li><a href="/admin/options">Редактирование опций</a></li>
+        </ul>
+    </nav>
+    <form class="elements" method="POST" action="/admin/elements">
+        <div class="elements-header">
+            <span>Поле</span>
+            <span>Название</span>
+            <span>Обязательные опции</span>
+            <span>Не обязательные опции</span>
+        </div>
+
+        <div class="list"></div>
+        <button class="button add">+</button>
+
+        <button class="button submit">Сохранить</button>
+    </form>
+{%  endblock %}

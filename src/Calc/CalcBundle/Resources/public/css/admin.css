@@ -1,0 +1,20 @@
+.elements-header {
+    display: grid;
+    grid-template-columns: 2fr 2fr 5fr 5fr;
+    grid-template-rows: 25px;
+}
+
+.elements-item {
+    display: grid;
+    grid-template-columns: 2fr 2fr 5fr 5fr;
+    grid-template-rows: 150px;
+}
+
+.elements-item > * {
+    display: block;
+}
+
+.select2-selection--multiple{
+    overflow: hidden !important;
+    height: 25px !important;
+}

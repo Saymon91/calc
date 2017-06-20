@@ -1,0 +1,17 @@
+{% extends "CalcCalcBundle:Show:base.html.twig" %}
+
+{% block title %}Калькулятор стоимости{% endblock %}
+{% block styles %}
+    {# <link rel="stylesheet" type="text/css" href="{{ asset('bundles/calccalc/css/admin.css') }}"> #}
+{% endblock %}
+
+{% block header %}Панель администрирования{% endblock %}
+
+{% block content %}
+    <nav>
+        <ul>
+            <li><a href="/admin/elements">Редактирование елементов дома</a></li>
+            <li><a href="/admin/options">Редактирование опций</a></li>
+        </ul>
+    </nav>
+{%  endblock %}

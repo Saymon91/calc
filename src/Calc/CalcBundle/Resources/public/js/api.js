@@ -7,9 +7,22 @@ class Api {
 
     const options = { method };
     if (method !== 'GET' && body) {
-      options.body = body;
+      options.body = '';
+      if (typeof body === 'object') {
+        for (const key in body) {
+          options.body += `${key}=${body[key]}&`
+        }
+      }
     }
-    const call = fetch(new Request(url, options));
+
+    if (method === 'POST') {
+      options.headers = new Headers();
+      options.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    }
+
+    const request = new Request(url, options);
+    console.log(request);
+    const call = fetch(request);
     if (reject instanceof Function) {
       call.catch(reject);
     }

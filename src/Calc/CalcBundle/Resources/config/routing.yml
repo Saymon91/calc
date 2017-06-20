@@ -3,6 +3,21 @@ calc_web_homepage:
     defaults: { _controller: CalcCalcBundle:Web:index }
     methods: [GET]
 
+calc_web_adminpage:
+    path:     /admin
+    defaults: { _controller: CalcCalcBundle:Admin:index }
+    methods: [GET]
+
+calc_web_admin_elements:
+    path:     /admin/elements
+    defaults: { _controller: CalcCalcBundle:Admin:elements }
+    methods: [GET]
+
+calc_admin_change_elements:
+    path:     /admin/elements
+    defaults: { _controller: CalcCalcBundle:Elements:update }
+    methods: [POST]
+
 calc_web_templates:
     path:     /templates
     defaults: { _controller: CalcCalcBundle:Web:templates }
@@ -11,6 +26,11 @@ calc_web_templates:
 calc_api_references:
     path:     /references
     defaults: { _controller: CalcCalcBundle:References:list }
+    methods: [GET]
+
+calc_api_elements:
+    path:     /elements
+    defaults: { _controller: CalcCalcBundle:Elements:list }
     methods: [GET]
 
 calc_api_reference:

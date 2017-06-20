@@ -5,13 +5,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="sets")
+ * @ORM\Table(name="elements")
  */
-class Sets
+class Elements
 {
     const FIELDS = [
         'id',
         'name',
+        'label',
         'options'
     ];
 
@@ -26,6 +27,11 @@ class Sets
      * @ORM\Column(type="string")
      */
     protected $name;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $label;
 
     /**
      * @ORM\Column(type="string")
@@ -66,6 +72,29 @@ class Sets
     }
 
     /**
+     * Set label
+     *
+     * @param string $label
+     * @return References
+     */
+    public function setLabel(string $label):References
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string
+     */
+    public function getLabel():string
+    {
+        return $this->label;
+    }
+
+    /**
      * Set options
      *
      * @param array $options
@@ -81,9 +110,9 @@ class Sets
     /**
      * Get options
      *
-     * @return array
+     * @return \stdClass
      */
-    public function getOptions():array
+    public function getOptions():\stdClass
     {
         return json_decode($this->options);
     }
@@ -100,5 +129,4 @@ class Sets
 
         return $result;
     }
-
 }
