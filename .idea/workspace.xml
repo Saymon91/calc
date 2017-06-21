@@ -2,25 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f8e4c52-b415-47f0-afc2-9a2cc2f9fadf" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.options.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/math.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.option.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/element.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.element.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ReferencesController.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ReferencesController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Elements.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Elements.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/css/admin.css" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/css/admin.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/api.js" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/api.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/calc.sql" afterPath="$PROJECT_DIR$/db/calc.sql" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,11 +45,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="calc.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="calc.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
               <caret line="143" column="9" lean-forward="false" selection-start-line="143" selection-start-column="9" selection-end-line="143" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calc.sql" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/db/calc.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2040">
+              <caret line="102" column="510" lean-forward="true" selection-start-line="102" selection-start-column="510" selection-end-line="102" selection-end-column="510" />
               <folding />
             </state>
           </provider>
@@ -576,6 +569,20 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="construction-calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="construction-calculator" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
@@ -727,7 +734,7 @@
       <workItem from="1496733202540" duration="63120000" />
       <workItem from="1496859492420" duration="20920000" />
       <workItem from="1497622363808" duration="429000" />
-      <workItem from="1497963116114" duration="44125000" />
+      <workItem from="1497963116114" duration="44266000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <created>1496871148542</created>
@@ -792,11 +799,18 @@
       <option name="project" value="LOCAL" />
       <updated>1497981295812</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Update grid">
+      <created>1498067824076</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1498067824076</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207397000" />
+    <option name="totallyTimeSpent" value="207538000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -848,7 +862,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.env" />
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-288">
@@ -1243,6 +1256,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
           <caret line="143" column="9" lean-forward="false" selection-start-line="143" selection-start-column="9" selection-end-line="143" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/db/calc.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="102" column="510" lean-forward="true" selection-start-line="102" selection-start-column="510" selection-end-line="102" selection-end-column="510" />
           <folding />
         </state>
       </provider>
