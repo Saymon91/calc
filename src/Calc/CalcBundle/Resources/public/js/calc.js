@@ -3,14 +3,17 @@
     constructor(body) {
       this.elements = {};
       this.references = {};
+      this.sets = {};
       this.templates = {};
+
       this.elementsTypes = new Map();
       this.elements.body = $(body);
 
       this.parameters = {
         floors: 1,
         floor1: {},
-        floor2: {}
+        floor2: {},
+        lastFloor: 'floor1'
       };
 
       this.options = {};
@@ -21,7 +24,8 @@
     async init() {
       await Promise.all([
         this.loadReferences(),
-        this.loadTemplates()
+        this.loadTemplates(),
+        this.loadElements()
       ]);
       this.mount();
       console.log(this);
@@ -62,52 +66,66 @@
 
       this.elements.lengthFloor1.bind('change', () => {
         this.build('floor1', { length: +this.elements.lengthFloor1.val() });
-        this.calcOptions('floors', 'floor1');
+        this.calcOptions();
       });
       this.elements.lengthFloor2.bind('change', () => {
         this.build('floor2', { length: +this.elements.lengthFloor2.val() });
-        this.calcOptions('floors', 'floor2');
+        this.calcOptions();
       });
       this.elements.widthFloor1.bind('change', () => {
         this.build('floor1', { width: +this.elements.widthFloor1.val() });
-        this.calcOptions('floors', 'floor1');
+        this.calcOptions();
       });
       this.elements.widthFloor2.bind('change', () => {
         this.build('floor2', { width: +this.elements.widthFloor2.val() });
-        this.calcOptions('floors', 'floor2');
+        this.calcOptions();
       });
       this.elements.heightFloor1.bind('change', () => {
         this.build('floor1', { height: +this.elements.heightFloor1.val() });
-        this.calcOptions('floors', 'floor1');
+        this.calcOptions();
       });
       this.elements.heightFloor2.bind('change', () => {
         this.build('floor2', { height: +this.elements.heightFloor2.val() });
-        this.calcOptions('floors', 'floor2');
+        this.calcOptions();
       });
 
       this.elements.floors.bind('change', () => {
-        this.build(null, { floors: +this.elements.floors.filter(':checked').val() });
         for (const name in this.options) {
-          const [type, element] = name.split(':');
-          if (type === 'floors') {
-            this.options[name].destruct();
-            delete this.options[name];
-            this.elements.optionsBlock.find(`#parameters-${element}`).empty().remove();
-          }
+          this.options[name].grid.destruct();
+          this.options[name].block.remove();
+          delete this.options[name];
         }
+
+        this.build(null, { floors: +this.elements.floors.filter(':checked').val() });
+        this.parameters.lastFloor = `floor${Math.floor(this.parameters.floors)}`;
 
         const floor2Dimensions = this.elements.content.find('#dimensions-floor2');
         this.parameters.floors < 2 ? floor2Dimensions.hide() : floor2Dimensions.show();
 
+
         for (let index = 1; index <= Math.floor(this.elements.floors.filter(':checked').val()); index++) {
-          this.buildOptions('floors', `floor${index}`);
+          this.buildOptions(`floor${index}`, `floor${index}`);
         }
+
+        this.buildOptions('attic', this.parameters.lastFloor);
+        this.buildOptions('roof', this.parameters.lastFloor);
       });
 
-      for (let index = 1; index <= Math.floor(this.elements.floors.filter(':checked').val()); index++) {
-        this.buildOptions('floors', `floor${index}`);
-        this.calcOptions('floors', `floor${index}`);
+      for (const name in this.options) {
+        this.options[name].grid.destruct();
+        this.options[name].block.remove();
+        delete this.options[name];
       }
+
+      for (let index = 1; index <= Math.floor(this.elements.floors.filter(':checked').val()); index++) {
+        this.buildOptions(`floor${index}`, `floor${index}`);
+        this.calcOptions(`floor${index}`);
+      }
+
+      this.buildOptions(`attic`, this.parameters.lastFloor);
+      this.calcOptions(`attic`);
+      this.buildOptions(`roof`, this.parameters.lastFloor);
+      this.calcOptions(`roof`);
     }
 
     createGrid(sourceFloor, container, data) {
@@ -150,7 +168,7 @@
       ];
       return new Grid(container, columns, data, {
         id: 'id',
-        rowTemplate: this.templates.option.clone(),
+        rowTemplate   : this.templates.option.clone(),
         headerTemplate: this.templates.option.clone(),
       });
     }
@@ -188,15 +206,15 @@
       this.parameters.floor2.wetR = (this.parameters.floor2.externalR || 0) * 0.1 + (this.parameters.floor2.internalR || 0) * 0.15;
     }
 
-    buildOptions(type, source) {
-      const floors = this.elementsTypes.get(type);
+    buildOptions(element, source) {
+      const data = this.sets[element].required.map(id => { return { data: this.references[id] }; });
       let block = this.templates.options.clone().appendTo(this.elements.optionsBlock);
-      block.prop('id', `parameters-${source}`);
-      const grid = this.createGrid(source, block.find('.required').find('div'), [...floors].map(data => { return { data };}));
+      block.prop('id', `parameters-${element}`);
+      const grid = this.createGrid(source, block.find('.required').find('div'), data);
       let checkbox = block
         .find('input[type="checkbox"].collapse')
-        .prop('id', `options-${source}-collapse`);
-      block.find('label').prop('for', `options-${source}-collapse`).text(type);
+        .prop('id', `options-${element}-collapse`);
+      block.find('label').prop('for', `options-${element}-collapse`).text(this.sets[element].label);
       checkbox.on('change', () => {
         grid.mount();
         grid.render();
@@ -204,12 +222,17 @@
       grid.mount();
       grid.render();
 
-      this.options[`${type}:${source}`] = grid;
+      this.options[element] = { block, grid };
     }
 
-    calcOptions(name, element) {
-      const key = `${name}:${element}`;
-      this.options[key] && this.options[key].render();
+    calcOptions(element) {
+      if (this.options[element]) {
+        this.options[element].grid.render();
+      } else {
+        for (const name in this.options) {
+          this.options[name].grid.render();
+        }
+      }
     }
 
     async loadReferences() {
@@ -220,13 +243,29 @@
 
       this.references = {};
       for (const option of data) {
-        option.calcCount = new Function(option.amount_formula ? `return ${option.amount_formula.replace(/:/g, 'this.')}` : `return 0`);
-        option.calcPrice = new Function('type', option.price_formula ? `return ${option.price_formula.replace(/:/g, 'this.').replace(/\.price/g, '["price_" + type]')}` : `return this['price_' + type]`);
-        this.references[option.id] = option;
-        if (!this.elementsTypes.has(option.elements)) {
-          this.elementsTypes.set(option.elements, new Set());
+        for (const [reg, replace] of operations.decoded) {
+          option.price_formula = option.price_formula
+            ? option.price_formula.replace(reg, replace)
+            : option.price_formula;
+          option.amount_formula = option.amount_formula
+            ? option.amount_formula.replace(reg, replace)
+            : option.amount_formula;
         }
-        this.elementsTypes.get(option.elements).add(option);
+
+        const countFunc = option.amount_formula
+          ? `return ${option.amount_formula.replace(/:/g, 'this.')};`
+          : 'return 0;';
+        const priceFunc = option.price_formula
+          ? `return ${option.price_formula.replace(/:/g, 'this.').replace(/\.price/g, '[\'price_\' + type]')};`
+          : 'return this[\'price_\' + type];';
+        /*
+        console.log(option);
+        console.log(countFunc);
+        console.log(priceFunc);
+        */
+        option.calcCount = new Function(countFunc);
+        option.calcPrice = new Function('type', priceFunc);
+        this.references[option.id] = option;
       }
 
       return this.references;
@@ -244,6 +283,23 @@
       }
       return this.templates;
     };
+
+    async loadElements() {
+      const { data } = await Api.get('/calc/elements', {}, () => { return {} });
+      if (!data || !Object.keys(data).length) {
+        return this.sets;
+      }
+
+      for (const { name, label, options } of data) {
+        this.sets[name] = {
+          label,
+          required  : options.required ? options.required.map(x => +x) : [],
+          additional: options.additional ? options.additional.map(x => +x) : [],
+        };
+      }
+
+      return this.sets;
+    }
   }
 
   window.onload = () => {

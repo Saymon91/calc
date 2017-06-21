@@ -110,14 +110,14 @@
     }
 
     async loadTemplates() {
-      const { data } = await Api.get('/calc/templates?name=element', {}, () => { return {} });
+      const { data } = await Api.get('/calc/templates?name=admin.element', {}, () => { return {} });
       if (!data || !Object.keys(data).length) {
         return this.templates;
       }
 
       this.templates = {};
       for (const name in data) {
-        this.templates[name] = $(data[name]);
+        this.templates[name.replace('admin.', '')] = $(data[name]);
       }
       return this.templates;
     }
@@ -139,7 +139,11 @@
       }
 
       for (const { id, name, label, options } of data || []) {
-        this.source[id] = Object.assign({ id, name, label }, options);
+        this.source[id] = {
+          id, name, label,
+          required: options.required ? options.required.map(x => +x) : [],
+          additional: options.additional ? options.additional.map(x => +x) : [],
+        };
       }
     };
 

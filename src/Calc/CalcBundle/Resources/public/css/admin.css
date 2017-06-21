@@ -1,16 +1,28 @@
-.elements-header {
+.elements .header {
     display: grid;
     grid-template-columns: 2fr 2fr 5fr 5fr;
     grid-template-rows: 25px;
 }
 
-.elements-item {
+.elements .item {
     display: grid;
     grid-template-columns: 2fr 2fr 5fr 5fr;
     grid-template-rows: 150px;
 }
 
-.elements-item > * {
+.options .header {
+    display: grid;
+    grid-template-columns: 5fr 5fr 2fr 5fr 3fr 3fr 2fr;
+    grid-template-rows: 40px;
+}
+
+.options .item {
+    display: grid;
+    grid-template-columns: 5fr 5fr 2fr 5fr 3fr 3fr 2fr;
+    grid-template-rows: 25px;
+}
+
+.item > * {
     display: block;
 }
 

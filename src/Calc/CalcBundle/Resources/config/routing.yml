@@ -13,9 +13,19 @@ calc_web_admin_elements:
     defaults: { _controller: CalcCalcBundle:Admin:elements }
     methods: [GET]
 
+calc_web_admin_references:
+    path:     /admin/references
+    defaults: { _controller: CalcCalcBundle:Admin:references }
+    methods: [GET]
+
 calc_admin_change_elements:
     path:     /admin/elements
     defaults: { _controller: CalcCalcBundle:Elements:update }
+    methods: [POST]
+
+calc_admin_change_references:
+    path:     /admin/references
+    defaults: { _controller: CalcCalcBundle:References:update }
     methods: [POST]
 
 calc_web_templates:

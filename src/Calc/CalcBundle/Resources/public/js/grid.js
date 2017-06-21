@@ -236,9 +236,12 @@ class Grid {
       this.displayItems[index].template.remove();
     }
 
+    console.log('render', start, finish);
+
     for (let index = start; index < finish; index++) {
+      console.log(index);
       const item = this.renderItem(index);
-      item.template.appendTo(this.elements.elements);
+      this.elements.elements.append(item.template);
       this.displayItems.push(item);
     }
 
@@ -247,6 +250,7 @@ class Grid {
 
   renderItem(id) {
     const item = this.data[id];
+    console.log(item);
     if (item.render instanceof Function) {
       item.template = item.render(item.data);
       return item
@@ -289,9 +293,9 @@ class Grid {
     this.displayItems = [];
     this.selected = [];
     this.filtered = [];
+    this.elements.grid.empty().remove();
     this.elements = {};
     this.options = Object.assign({}, DEFAULT_OPTIONS);
-    this.elements.grid.empty().remove();
   }
 
   removeItem(id) {

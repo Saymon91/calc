@@ -25,13 +25,11 @@ class ReferencesController extends DefaultController
         {
 
             $result['data'] = $this->getReferences($name);
+            return $this->toJson($result);
         }
         catch (\Exception $error)
         {
             $result['error'] = ['code' => 500, 'message' => 'Internal error'];
-        }
-        finally
-        {
             return $this->toJson($result);
         }
     }
@@ -42,52 +40,46 @@ class ReferencesController extends DefaultController
         try
         {
             $result['data'] = $this->getReferences();
+            return $this->toJson($result);
         }
         catch (\Exception $error)
         {
-            print($error->getMessage());
             $result['error'] = ['code' => 500, 'message' => 'Internal error'];
-        }
-        finally
-        {
             return $this->toJson($result);
         }
     }
 
-    public function add(array $item = []):References
+    public function updateAction(Request $request):Response
     {
-        $manager = $references = $this->getDoctrine()->getManager();
-        $referenceItem = new References();
-        foreach (References::FIELDS as $value)
+        $data = json_decode($request->request->get('data'));
+        $manager = $this->getDoctrine()->getManager();
+        $references = $manager->getRepository('CalcCalcBundle:References');
+
+        print_r($data);
+        foreach ($data as $value)
         {
-            if (isset($item[$value])) {
-                $setter = "set".ucfirst($value);
-                if (method_exists($referenceItem, $setter))
-                {
-                    $referenceItem->$setter($item[$value]);
+            $element = property_exists($value, 'id') ? $references->find($value->id) : new References();
+            if (!$element) {
+                $element = new References();
+            }
+
+            foreach (References::FIELDS as $key) {
+                if (property_exists($value, $key)){
+                    $setter = "set".ucfirst(str_replace('_', '', ucwords($key, '_')));
+                    print($setter);
+                    print('<br>');
+                    if (method_exists($element, $setter)) {
+                        $element->$setter($value->$key);
+                    }
+
                 }
             }
+
+            $manager->persist($element);
         }
 
-        print('<pre>');
-        print_r($referenceItem->getFields());
-        print('<pre>');
-
-        $manager->persist($referenceItem);
         $manager->flush();
 
-        print('<pre>');
-        print_r($referenceItem->getFields());
-        print('<pre>');
-
-        return $referenceItem;
-    }
-
-    public function addAction(Request $request):Response
-    {
-        print('<pre>');
-        print_r($request->request->all());
-        print('</pre>');
-        return $this->toJson([]);
+        return $this->toJson(["data" => $references->findAll()]);
     }
 }

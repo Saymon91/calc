@@ -44,14 +44,32 @@ class ElementsController extends DefaultController
     public function updateAction(Request $request):Response
     {
         $data = json_decode($request->request->get('data'));
-        print_r($data);
-        if (isset($data['new'])) {
+        $manager = $this->getDoctrine()->getManager();
+        $elements = $manager->getRepository('CalcCalcBundle:Elements');
 
+        foreach($data as $id => $value)
+        {
+            $element = $elements->find($id);
+            if (!$element) {
+                $element = new Elements();
+            }
+
+            property_exists($value, 'name') && $element->setName($value->name);
+            property_exists($value, 'label') && $element->setLabel($value->label);
+            $element->setOptions([
+                "required" => property_exists($value, 'required') ? $value->required : [],
+                "additional" => property_exists($value, 'additional') ? $value->additional : []
+            ]);
+
+            $manager->persist($element);
         }
-        return $this->toJson();
+
+        $manager->flush();
+
+        return $this->toJson(["data" => $elements->findAll()]);
     }
 
-    public function add(array $item = []):References
+    public function add(array $item = []):Elements
     {
         $manager = $references = $this->getDoctrine()->getManager();
         $setItem = new Elements();

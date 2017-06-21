@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class References
 {
-
     const FIELDS = [
         'id',
         'name',
@@ -45,22 +44,22 @@ class References
     /**
      * @ORM\Column(type="string")
      */
-    protected $unit = 'р';
+    protected $unit = 'м';
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $currency = '';
+    protected $currency = 'р';
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $price_formula = 0;
+    protected $price_formula = ":count * :length";
 
     /**
      * @ORM\Column(type="string")
      */
-    protected $amount_formula = 0;
+    protected $amount_formula = ":width * :length";
 
 
     /**
@@ -191,10 +190,10 @@ class References
     /**
      * Set price_formula
      *
-     * @param price_formula
+     * @param string $price_formula
      * @return References
      */
-    public function setPriceFormula(float $price_formula):References
+    public function setPriceFormula(string $price_formula):References
     {
         $this->price_formula = $price_formula;
 
@@ -207,7 +206,7 @@ class References
      * @return string
      */
 
-    public function getPriceFormula():float
+    public function getPriceFormula():string
     {
         return $this->price_formula;
     }
@@ -215,10 +214,10 @@ class References
     /**
      * Set amount_formula
      *
-     * @param amount_formula
+     * @param string $amount_formula
      * @return References
      */
-    public function setAmountFormula(float $amount_formula):References
+    public function setAmountFormula(string $amount_formula):References
     {
         $this->amount_formula = $amount_formula;
 
@@ -231,7 +230,7 @@ class References
      * @return string
      */
 
-    public function getAmountFormula():float
+    public function getAmountFormula():string
     {
         return $this->amount_formula;
     }

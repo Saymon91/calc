@@ -20,9 +20,7 @@ class Api {
       options.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     }
 
-    const request = new Request(url, options);
-    console.log(request);
-    const call = fetch(request);
+    const call = fetch(new Request(url, options));
     if (reject instanceof Function) {
       call.catch(reject);
     }

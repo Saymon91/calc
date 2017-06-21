@@ -52,9 +52,9 @@ class Elements
      * Set name
      *
      * @param string $name
-     * @return References
+     * @return Elements
      */
-    public function setName(string $name):References
+    public function setName(string $name):Elements
     {
         $this->name = $name;
 
@@ -75,9 +75,9 @@ class Elements
      * Set label
      *
      * @param string $label
-     * @return References
+     * @return Elements
      */
-    public function setLabel(string $label):References
+    public function setLabel(string $label):Elements
     {
         $this->label = $label;
 
@@ -98,9 +98,9 @@ class Elements
      * Set options
      *
      * @param array $options
-     * @return References
+     * @return Elements
      */
-    public function setOptions(array $options):References
+    public function setOptions(array $options):Elements
     {
         $this->options = json_encode($options);
 

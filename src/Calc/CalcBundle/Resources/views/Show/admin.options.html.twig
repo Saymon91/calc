@@ -8,7 +8,8 @@
 
 {%  block scripts %}
     <script type="application/javascript" src="{{ asset('bundles/calccalc/js/select2.full.min.js') }}"></script>
-    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/admin.elements.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/math.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('bundles/calccalc/js/admin.options.js') }}"></script>
 {% endblock %}
 {% block header %}Панель администрирования{% endblock %}
 
@@ -18,12 +19,15 @@
             <li><a href="/admin/options">Редактирование опций</a></li>
         </ul>
     </nav>
-    <form class="elements" method="POST" action="/admin/elements">
+    <form class="options" method="POST" action="/admin/references">
         <div class="header">
-            <span>Поле</span>
             <span>Название</span>
-            <span>Обязательные опции</span>
-            <span>Не обязательные опции</span>
+            <span>Формула расчета количества</span>
+            <span>Единица измерения</span>
+            <span>Формула расчета стоимости</span>
+            <span>Стоимость(сух.)</span>
+            <span>Стоимость(влаж.)</span>
+            <span>Валюта</span>
         </div>
 
         <div class="list"></div>
