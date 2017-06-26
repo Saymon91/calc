@@ -14,20 +14,26 @@
 {% block header %}Калькулятор стоимости{% endblock %}
 
 {% block content %}
+    <nav>
+        <ul><a href="/calc/admin">Админка</a></ul>
+    </nav>
+
     <form name="calc" method="post" enctype="application/x-www-form-urlencoded" action="javascript:submit(this)">
     {% block editor %}
         <fieldset id="config">
             <input type="checkbox" id="config-collapse" class="collapse" disabled checked>
             <legend><label for="config-collapse">Этажность</label></legend>
             <div class="block">
-                <fieldset>
+                <fieldset id="dimensions-floors">
                     {% block floors_count %}
                         <input type="checkbox" id="floors-collapse" class="collapse" disabled checked>
                         <legend><label for="floors-collapse">Этажность</label></legend>
                         <div class="block">
+                            {#
                             <input type="radio" name="floors" value=1 id="floors-1" checked><label for="floors-1">Один</label>
                             <input type="radio" name="floors" value=1.5 id="floors-1-5"><label for="floors-1-5">Полтора</label>
                             <input type="radio" name="floors" value=2 id="floors-2"><label for="floors-2">Два</label>
+                            #}
                         </div>
                     {% endblock %}
                 </fieldset>

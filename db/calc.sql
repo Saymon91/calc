@@ -47,6 +47,32 @@ LOCK TABLES `calc` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `configurations`
+--
+
+DROP TABLE IF EXISTS `configurations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `configurations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `label` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
+  `elements` json DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `configurations`
+--
+
+LOCK TABLES `configurations` WRITE;
+/*!40000 ALTER TABLE `configurations` DISABLE KEYS */;
+INSERT INTO `configurations` VALUES (2,'single_storey','Одноэтажный','[\"5\", \"6\", \"7\"]');
+/*!40000 ALTER TABLE `configurations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `elements`
 --
 
@@ -59,7 +85,7 @@ CREATE TABLE `elements` (
   `label` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   `options` json DEFAULT NULL,
   PRIMARY KEY (`id`,`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +94,7 @@ CREATE TABLE `elements` (
 
 LOCK TABLES `elements` WRITE;
 /*!40000 ALTER TABLE `elements` DISABLE KEYS */;
-INSERT INTO `elements` VALUES (1,'floor1','1 этаж','{\"required\": [\"1\", \"2\", \"3\", \"4\", \"5\", \"7\", \"8\", \"9\", \"10\", \"11\", \"12\", \"13\", \"14\", \"15\", \"16\", \"17\", \"20\"], \"additional\": []}'),(2,'floor2','2 этаж','{\"required\": [], \"additional\": []}'),(3,'attic','Чердачное перекрытие','{\"required\": [\"22\", \"23\", \"24\", \"26\"], \"additional\": []}'),(4,'roof','Крыша','{\"required\": [\"27\", \"28\", \"29\", \"30\", \"31\", \"32\", \"33\", \"34\"], \"additional\": []}');
+INSERT INTO `elements` VALUES (5,'floor_1_single_storey','Первый этаж','{\"required\": [\"1\", \"2\", \"3\", \"4\", \"5\", \"7\", \"8\", \"9\", \"10\", \"11\", \"12\", \"13\", \"14\", \"15\", \"16\", \"17\", \"20\"], \"additional\": [\"6\", \"18\", \"19\", \"21\"]}'),(6,'attic_single_storey','Чердачное перекрытие','{\"required\": [\"22\", \"23\", \"24\", \"26\"], \"additional\": [\"35\"]}'),(7,'roof_single_storey','Крыша','{\"required\": [\"25\", \"27\", \"28\", \"29\", \"30\", \"31\", \"32\", \"33\", \"34\"], \"additional\": []}');
 /*!40000 ALTER TABLE `elements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +117,7 @@ CREATE TABLE `options` (
   PRIMARY KEY (`id`,`name`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   FULLTEXT KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -100,7 +126,7 @@ CREATE TABLE `options` (
 
 LOCK TABLES `options` WRITE;
 /*!40000 ALTER TABLE `options` DISABLE KEYS */;
-INSERT INTO `options` VALUES (1,'Лаги первого этажа 200х50х6000 мм.',NULL,'р',':price * :count',':length * 0.39',9800,7500),(2,'Обрешётка нижняя 100*25*6000 мм. (этаж)',NULL,'р',':price * :count',':length mul 0.39 div 2',9800,7500),(3,'Обрешётка верхняя 100*25*6000 мм. (этаж)',NULL,'р',':price * :count',':length mul 0.39 div 2',9800,7500),(4,'Плёнка гидроизоляции (этаж)',NULL,'р',':price * :count',':area * 1.15',21,21),(5,'Плёнка пароизояции (этаж)',NULL,'р',':price * :count',':area * 1.15',21,21),(6,'Черновое покрытие пола',NULL,'р',':price * :count',':area mul 1.1',340,340),(7,'Утепление пола',NULL,'р',':price * :count',':area mul 0.2',60,60),(8,'Стойки каркаса внешних и внутренних несущих стен 150х50х6000 мм.','куб.м','р',':price * :count','(:externalR add :internalR div 2) / 0.55 mul 0.045',9800,7500),(9,'Стойки каркаса перегородок 100х50х6000','куб.м','р',':price * :count',':wetR div 0.4 mul 0.3',9800,7500),(10,'Обрешётка с внешней стороны 50х25х3000','куб.м','р',':price mul :count',':externalR div 4 mul 6 * 0.02',9800,7500),(11,'Обрешётка с внутренней стороны  50х25х3000','куб.м','р',':price mul :count','(:externalR add :internalR) div 4 mul 6 * 0.01',9800,7500),(12,'Утепление несущих стен','куб.м','р',':price mul :count',':externalR mul 2.95 * 0.2',1450,1450),(13,'Утепление внешних несущих стен четвртым слоем','куб.м','р',':price mul :count',':externalR mul 2.95 * 0.05',1450,1450),(14,'Утепление перегородок','куб.м','р',':price mul :count',':internalR div 2 mul 0.1 * 2.95',1450,1450),(15,'Плёнка гидроизоляции (чердачное помещение)','шт','р',':price mul :count',':externalR mul 3.2',21,21),(16,'Плёнка пароизояции (чердачное помещение)','шт','р',':price mul :count','(:externalR add :internalR add :wetR) mul 2.95',21,21),(17,'Обшивка внешних стен','кв.м','р',':price mul :count',':externalR mul 3.1',390,390),(18,'Обшивка внутренних стен','кв.м','р',':price mul :count','(:externalR add :internalR add :wetR) mul 2.95',280,280),(19,'Отделка фасада',NULL,'р',':price mul :count',':externalR mul 3.1',390,390),(20,'Обрешётка 50х25х4000 (этаж)','куб.м','р',':price mul :count',':width div 0.35 mul 3 * 0.01',9800,7500),(21,'Обшивка','кв.м','р',':price mul :count',':area mul 0.92',250,250),(22,'Лаги перекрытия 200х50х6000','куб.м','р',':count * :length',':length div 0.5 mul 2.6 mul 0.06',9800,7500),(23,'Обрешётка 50х25х4000 (чердачное помещение)','куб.м','р',':count * :length',':length div 0.5 mul 2.6 mul 0.06 div 2',9800,9800),(24,'Плёнка пароизояции с двух сторон','шт','р',':count * :length',':area',21,21),(25,'Обрешётка 50х25х4000 мм. (крыша)','кв.м','р',':count * :length',':width div 0.35 mul 0.04',250,250),(26,'Утепление чердачного перекрытия','куб.м','р',':count * :length',':area mul 0.2',1450,1450),(27,'Обшивка (крыша)','кв.м','р',':count * :length',':area mul 1.2',250,250),(28,'Стропильная система 200х50х6000 мм.','куб.м','р',':count * :length','(:length add 1.6) div 0.66 mul 4 mul 0.06',9800,7500),(29,'Металлочерепица','кв.м','р',':count * :length','(:length add 1.6) mul (:width add 1.6) mul 1.15',400,400),(30,'Контробрешётка 50х25х4000 мм. (крыша)','куб.м','р',':count * :length','(:length add 1.6) div 0.35 mul 2 mul 0.02',9800,7500),(31,'Обрешётка 100х25х6000 мм. (крыша)','куб.м','р',':count * :length','(:width mul 2 add 1.6) div 0.35 mul 2.02',9800,7500),(32,'Плёнка гидроизоляции (крыша)','шт','р',':count * :length','(:length add 1.6) mul (:width add 1.6) mul 1.15',21,21),(33,'Плёнка пароизояции (крыша)','шт','р',':count * :length','(:length add 1.6) mul (:width add 1.6) mul 1.15',43,43),(34,'Утепление крыши','куб.м','р',':count * :length','(:length add 1.6) mul (:width add 1.6) mul 1.15 mul 0.2',1450,1450);
+INSERT INTO `options` VALUES (1,'Лаги первого этажа 200х50х6000 мм.',NULL,'р',':price * :count',':length * 0.39',9800,7500),(2,'Обрешётка нижняя 100*25*6000 мм. (этаж)',NULL,'р',':price * :count',':length mul 0.39 div 2',9800,7500),(3,'Обрешётка верхняя 100*25*6000 мм. (этаж)',NULL,'р',':price * :count',':length mul 0.39 div 2',9800,7500),(4,'Плёнка гидроизоляции (этаж)',NULL,'р',':price * :count',':area * 1.15',21,21),(5,'Плёнка пароизояции (этаж)',NULL,'р',':price * :count',':area * 1.15',21,21),(6,'Черновое покрытие пола',NULL,'р',':price * :count',':area mul 1.1',340,340),(7,'Утепление пола',NULL,'р',':price * :count',':area mul 0.2',60,60),(8,'Стойки каркаса внешних и внутренних несущих стен 150х50х6000 мм.','куб.м','р',':price * :count','(:externalR add :internalR div 2) / 0.55 mul 0.045',9800,7500),(9,'Стойки каркаса перегородок 100х50х6000','куб.м','р',':price * :count',':wetR div 0.4 mul 0.3',9800,7500),(10,'Обрешётка с внешней стороны 50х25х3000','куб.м','р',':price mul :count',':externalR div 4 mul 6 * 0.02',9800,7500),(11,'Обрешётка с внутренней стороны  50х25х3000','куб.м','р',':price mul :count','(:externalR add :internalR) div 4 mul 6 * 0.01',9800,7500),(12,'Утепление несущих стен','куб.м','р',':price mul :count',':externalR mul 2.95 * 0.2',1450,1450),(13,'Утепление внешних несущих стен четвртым слоем','куб.м','р',':price mul :count',':externalR mul 2.95 * 0.05',1450,1450),(14,'Утепление перегородок','куб.м','р',':price mul :count',':internalR div 2 mul 0.1 * 2.95',1450,1450),(15,'Плёнка гидроизоляции (чердачное помещение)','шт','р',':price mul :count',':externalR mul 3.2',21,21),(16,'Плёнка пароизояции (чердачное помещение)','шт','р',':price mul :count','(:externalR add :internalR add :wetR) mul 2.95',21,21),(17,'Обшивка внешних стен','кв.м','р',':price mul :count',':externalR mul 3.1',390,390),(18,'Обшивка внутренних стен','кв.м','р',':price mul :count','(:externalR add :internalR add :wetR) mul 2.95',280,280),(19,'Отделка фасада',NULL,'р',':price mul :count',':externalR mul 3.1',390,390),(20,'Обрешётка 50х25х4000 (этаж)','куб.м','р',':price mul :count',':width div 0.35 mul 3 * 0.01',9800,7500),(21,'Обшивка','кв.м','р',':price mul :count',':area mul 0.92',250,250),(22,'Лаги перекрытия 200х50х6000','куб.м','р',':price mul :count',':length div 0.5 mul 2.6 mul 0.06',9800,7500),(23,'Обрешётка 50х25х4000 (чердачное помещение)','куб.м','р',':price mul :count',':length div 0.5 mul 2.6 mul 0.06 div 2',9800,9800),(24,'Плёнка пароизояции с двух сторон','шт','р',':price mul :count',':area',21,21),(25,'Обрешётка 50х25х4000 мм. (крыша)','кв.м','р',':price mul :count',':width div 0.35 mul 0.04',9800,9800),(26,'Утепление чердачного перекрытия','куб.м','р',':price mul :count',':area mul 0.2',1450,1450),(27,'Обшивка (крыша)','кв.м','р',':price mul :count',':area mul 1.2',250,250),(28,'Стропильная система 200х50х6000 мм.','куб.м','р',':price mul :count','(:length add 1.6) div 0.66 mul 4 mul 0.06',9800,7500),(29,'Металлочерепица','кв.м','р',':price mul :count','(:length add 1.6) mul (:width add 1.6) mul 1.15',400,400),(30,'Контробрешётка 50х25х4000 мм. (крыша)','куб.м','р',':price mul :count','(:length add 1.6) div 0.35 mul 2 mul 0.02',9800,7500),(31,'Обрешётка 100х25х6000 мм. (крыша)','куб.м','р',':price mul :count','(:width mul 2 add 1.6) div 0.35 mul 0.02',9800,7500),(32,'Плёнка гидроизоляции (крыша)','шт','р',':price mul :count','(:length add 1.6) mul (:width add 1.6) mul 1.15',21,21),(33,'Плёнка пароизояции (крыша)','шт','р',':price mul :count','(:length add 1.6) mul (:width add 1.6) mul 1.15',43,43),(34,'Утепление крыши','куб.м','р',':price mul :count','(:length add 1.6) mul (:width add 1.6) mul 1.15 mul 0.2',1450,1450),(35,'Обшивка чердачного перекрытия','кв.м','р',':price mul :count',':area',250,250);
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -113,4 +139,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-21 20:58:08
+-- Dump completed on 2017-06-26 20:31:52

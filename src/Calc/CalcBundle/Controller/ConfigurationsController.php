@@ -1,22 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: semen
- * Date: 14.06.17
- * Time: 21:07
- */
 
 namespace Calc\CalcBundle\Controller;
 use Symfony\Component\HttpFoundation\{Request, Response};
-use Calc\CalcBundle\Entity\Elements;
+use Calc\CalcBundle\Entity\Configurations;
 
-class ElementsController extends DefaultController
+class ConfigurationsController extends DefaultController
 {
     public function getElements(): array
     {
         $result = [];
-        $elements = $this->getDoctrine()->getManager()->getRepository('CalcCalcBundle:Elements');
-        $list = $elements->findAll();
+        $configurations = $this->getDoctrine()->getManager()->getRepository('CalcCalcBundle:Configurations');
+        $list = $configurations->findAll();
         foreach ($list as $value)
         {
             $result[] = $value->getFields();
@@ -45,27 +39,26 @@ class ElementsController extends DefaultController
     {
         $data = json_decode($request->request->get('data'));
         $manager = $this->getDoctrine()->getManager();
-        $elements = $manager->getRepository('CalcCalcBundle:Elements');
+        $configurations = $manager->getRepository('CalcCalcBundle:Configurations');
 
         foreach($data as $id => $value)
         {
-            $element = $elements->find($id);
+            $element = $configurations->find($id);
             if (!$element) {
-                $element = new Elements();
+                $element = new Configurations();
             }
+
+            print_r($value);
 
             property_exists($value, 'name') && $element->setName($value->name);
             property_exists($value, 'label') && $element->setLabel($value->label);
-            $element->setOptions([
-                "required" => property_exists($value, 'required') ? $value->required : [],
-                "additional" => property_exists($value, 'additional') ? $value->additional : []
-            ]);
+            property_exists($value, 'elements') && $element->setElements($value->elements);
 
             $manager->persist($element);
         }
 
         $manager->flush();
 
-        return $this->toJson(["data" => $elements->findAll()]);
+        return $this->toJson(["data" => $configurations->findAll()]);
     }
 }

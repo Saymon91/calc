@@ -4,15 +4,16 @@
       this.elements = {};
       this.references = {};
       this.sets = {};
+      this.configurations = new Map();
       this.templates = {};
 
       this.elementsTypes = new Map();
       this.elements.body = $(body);
 
       this.parameters = {
-        floors: 1,
-        floor1: {},
-        floor2: {},
+        floors   : 1,
+        floor1   : {},
+        floor2   : {},
         lastFloor: 'floor1'
       };
 
@@ -23,6 +24,7 @@
 
     async init() {
       await Promise.all([
+        this.loadConfigurations(),
         this.loadReferences(),
         this.loadTemplates(),
         this.loadElements()
@@ -34,32 +36,38 @@
     mount() {
       const { body } = this.elements;
       const content = body.find('article.content');
+      const floorsBlock = content.find('#dimensions-floors').find('.block');
+      for (const [id, { name, label }] of this.configurations) {
+        floorsBlock.append(`<input type="radio" name="floors" id="configuration-${id}" value="${name}">`);
+        floorsBlock.append(`<label for="configuration-${id}">${label}</label>`);
+      }
+
       Object.assign(this.elements, {
         content,
 
         floors: content.find('input[name="floors"]'),
 
-        lengthFloor1: content.find('#dimensions-floor1-length'),
         widthFloor1 : content.find('#dimensions-floor1-width'),
+        lengthFloor1: content.find('#dimensions-floor1-length'),
         heightFloor1: content.find('#dimensions-floor1-height'),
 
         areaFloor1   : content.find('#dimensions-floor1-area'),
         areaWetFloor1: content.find('#dimensions-floor1-area-wet'),
 
+        wetRFloor1     : content.find('#dimensions-floor1-wet-r'),
         internalRFloor1: content.find('#dimensions-floor1-internal-r'),
         externalRFloor1: content.find('#dimensions-floor1-external-r'),
-        wetRFloor1     : content.find('#dimensions-floor1-wet-r'),
 
-        lengthFloor2: content.find('#dimensions-floor2-length'),
         widthFloor2 : content.find('#dimensions-floor2-width'),
+        lengthFloor2: content.find('#dimensions-floor2-length'),
         heightFloor2: content.find('#dimensions-floor2-height'),
 
         areaFloor2   : content.find('#dimensions-floor2-area'),
         areaWetFloor2: content.find('#dimensions-floor2-area-wet'),
 
+        wetRFloor2     : content.find('#dimensions-floor2-wet-r'),
         internalRFloor2: content.find('#dimensions-floor2-internal-r'),
         externalRFloor2: content.find('#dimensions-floor2-external-r'),
-        wetRFloor2     : content.find('#dimensions-floor2-wet-r'),
 
         optionsBlock: content.find('#parameters').find('.block'),
       });
@@ -90,27 +98,34 @@
       });
 
       this.elements.floors.bind('change', () => {
+        let { elements } = this.configurations.get(this.elements.floors.val());
+        elements = elements.map(id => Object.assign({ id }, this.sets[id]));
+
         for (const name in this.options) {
           this.options[name].grid.destruct();
           this.options[name].block.remove();
           delete this.options[name];
         }
 
-        this.build(null, { floors: +this.elements.floors.filter(':checked').val() });
-        this.parameters.lastFloor = `floor${Math.floor(this.parameters.floors)}`;
-
         const floor2Dimensions = this.elements.content.find('#dimensions-floor2');
-        this.parameters.floors < 2 ? floor2Dimensions.hide() : floor2Dimensions.show();
+        this.build(null, { floors: 1 });
 
+        floor2Dimensions.hide();
+        this.parameters.lastFloor = 'floor1';
 
-        for (let index = 1; index <= Math.floor(this.elements.floors.filter(':checked').val()); index++) {
-          this.buildOptions(`floor${index}`, `floor${index}`);
+        for (const { id, name } of elements) {
+          if (name === 'floor2') {
+            this.parameters.lastFloor = 'floor2';
+            this.build(null, { floors: 2 });
+            floor2Dimensions.show();
+          }
+
+          this.buildOptions(id, name.startsWith('floor1') ? 'floor1' : this.parameters.lastFloor);
+          this.calcOptions(id);
         }
-
-        this.buildOptions('attic', this.parameters.lastFloor);
-        this.buildOptions('roof', this.parameters.lastFloor);
       });
 
+      /*
       for (const name in this.options) {
         this.options[name].grid.destruct();
         this.options[name].block.remove();
@@ -126,6 +141,7 @@
       this.calcOptions(`attic`);
       this.buildOptions(`roof`, this.parameters.lastFloor);
       this.calcOptions(`roof`);
+      */
     }
 
     createGrid(sourceFloor, container, data) {
@@ -167,9 +183,25 @@
         }, 'currency'
       ];
       return new Grid(container, columns, data, {
-        id: 'id',
-        rowTemplate   : this.templates.option.clone(),
-        headerTemplate: this.templates.option.clone(),
+        id             : 'id',
+        rowTemplate    : this.templates.option.clone(),
+        headerTemplate : this.templates.option.clone(),
+        footerTemplate : $('<div class="list-footer"><span>ВСЕГО:</span><span class="list-total"></span></div>'),
+        includeFooter  : true,
+        footerFormatter: (template, grid) => {
+          const total = {
+            dry: 0,
+            wet: 0
+          };
+          for (const { data } of grid.data) {
+            if (data.total) {
+              total.dry += +data.total.dry;
+              total.wet += +data.total.wet;
+            }
+          }
+
+          template.find('.list-total').text(`${total.dry.toFixed(2)}/${total.wet.toFixed(2)}`);
+        }
       });
     }
 
@@ -258,11 +290,7 @@
         const priceFunc = option.price_formula
           ? `return ${option.price_formula.replace(/:/g, 'this.').replace(/\.price/g, '[\'price_\' + type]')};`
           : 'return this[\'price_\' + type];';
-        /*
-        console.log(option);
-        console.log(countFunc);
-        console.log(priceFunc);
-        */
+
         option.calcCount = new Function(countFunc);
         option.calcPrice = new Function('type', priceFunc);
         this.references[option.id] = option;
@@ -270,6 +298,20 @@
 
       return this.references;
     };
+
+    async loadConfigurations() {
+      const { data } = await Api.get('/calc/configurations', {}, () => { return {} });
+      if (!data || !Object.keys(data).length) {
+        return this.configurations;
+      }
+
+      this.configurations = new Map();
+      for (const { name, label, elements } of data) {
+        this.configurations.set(name, { name, label, elements: elements.map(x => +x) });
+      }
+
+      return this.configurations;
+    }
 
     async loadTemplates() {
       const { data } = await Api.get('/calc/templates?name=options,option,fieldset', {}, () => { return {} });
@@ -290,9 +332,9 @@
         return this.sets;
       }
 
-      for (const { name, label, options } of data) {
-        this.sets[name] = {
-          label,
+      for (const { id,  name, label, options } of data) {
+        this.sets[id] = {
+          name, label,
           required  : options.required ? options.required.map(x => +x) : [],
           additional: options.additional ? options.additional.map(x => +x) : [],
         };

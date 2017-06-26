@@ -16,10 +16,12 @@
 {% block content %}
     <nav>
         <ul>
-            <li><a href="/admin/options">Редактирование опций</a></li>
+            <li><a href="/calc">Рассчет</a></li>
+            <li><a href="/calc/admin/elements">Редактирование элементов</a></li>
+            <li><a href="/calc/admin/configurations">Редактирование конфигураций</a></li>
         </ul>
     </nav>
-    <form class="options" method="POST" action="/admin/references">
+    <form class="options" method="POST" action="/calc/admin/references">
         <div class="header">
             <span>Название</span>
             <span>Формула расчета количества</span>

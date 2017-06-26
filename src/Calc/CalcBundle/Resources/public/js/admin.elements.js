@@ -2,7 +2,7 @@
   class Elements {
     constructor(body) {
       this.templates = {};
-      this.options = {};
+      this.options = new Map();
 
       this.elements = { body };
       this.source = {};
@@ -29,7 +29,7 @@
     }
 
     addItem({id = 'new',  name = null, label = null, required = [], additional = [] } = {}) {
-      const item = this.elements.list.append(this.templates.element.clone()).prop('id', `element-${id}`);
+      const item = this.templates.element.clone().appendTo(this.elements.list).prop('id', `element-${id}`);
       const nameInput = item.find('input[name="name"]').val(name).prop({
         id: `element-${id}-name`,
         name: `element-${id}-name`
@@ -46,25 +46,60 @@
         this.registerChange(id, 'label', labelInput.val());
       });
 
-      const requiredSelector = item.find('select[name="required"]').prop({
+      const requiredContainer = item.find('ul.required').prop({
         id  : `element-${id}-options-required`,
-        name: `element-${id}-options-required`
+        //name: `configuration-${id}-elements`
       });
-      requiredSelector.on('change', () => {
-        this.registerChange(id, 'required', requiredSelector.val());
+      const requiredList = new List(requiredContainer, $('<li><input type="checkbox"><label></label></li>'), ({ id: itemId, label: itemLabel }, template) => {
+        template = $(template).clone();
+        const checkbox = template.find('input[type="checkbox"]')
+          .prop({
+            id     : `checkbox-required-${itemId}`,
+            checked: required.includes(itemId)
+          })
+          .val(itemId);
+
+        checkbox.on('change', () => {
+          const result = Array.from(requiredContainer
+            .find('input[type="checkbox"]:checked')
+            .map((i, element) => $(element).val())
+          ).join(',');
+          this.registerChange(id, 'required', result);
+        });
+
+        template.find('label').prop('for', `checkbox-required-${itemId}`).text(itemLabel);
+        return template;
       });
 
-      const additionalSelector = item.find('select[name="additional"]').prop({
-        id  : `element-${id}-options-additional`,
-        name: `element-${id}-options-additional`
+      const additionalContainer = item.find('ul.additional').prop({
+        id  : `element-${id}-options-required`,
+        //name: `configuration-${id}-elements`
       });
-      additionalSelector.on('change', () => {
-        this.registerChange(id, 'additional', additionalSelector.val());
+      const additionalList = new List(additionalContainer, $('<li><input type="checkbox"><label></label></li>'), ({ id: itemId, label: itemLabel }, template) => {
+        template = $(template).clone();
+        const checkbox = template.find('input[type="checkbox"]')
+          .prop({
+            id     : `checkbox-additional-${itemId}`,
+            checked: additional.includes(itemId)
+          })
+          .val(itemId);
+
+        checkbox.on('change', () => {
+          const result = Array.from(additionalContainer
+            .find('input[type="checkbox"]:checked')
+            .map((i, element) => $(element).val())
+          ).join(',');
+          this.registerChange(id, 'additional', result);
+        });
+
+        template.find('label').prop('for', `checkbox-additional-${itemId}`).text(itemLabel);
+        return template;
       });
 
-      for (const { id, name } of this.options) {
-        requiredSelector.append(new Option(name, id, false, required.includes(id)));
-        additionalSelector.append(new Option(name, id, false, additional.includes(id)));
+
+      for (const [id, { name }] of this.options) {
+        requiredList.add([id, { label: name }]);
+        additionalList.add([id, { label: name }]);
       }
     }
 
@@ -90,9 +125,17 @@
           return false;
         }
 
-        console.log(new FormData(this.elements.base.html()));
+        for (const id in this.changes) {
+          if (this.changes[id].required) {
+            this.changes[id].required = this.changes[id].required.split(',');
+          }
+          if (this.changes[id].additional) {
+            this.changes[id].additional = this.changes[id].additional.split(',');
+          }
+        }
 
-        Api.post('/calc/admin/elements', { data: JSON.stringify(this.changes) }, () => {}).then(console.log).catch(console.error);
+        Api.post('/calc/admin/elements', { data: JSON.stringify(this.changes) }, () => {})
+          .then(() => this.changes = {}).catch(() => this.changes = {});
       });
 
       this.elements.submit.toggle(!!Object.keys(this.changes).length);
@@ -128,7 +171,10 @@
         return this.options;
       }
 
-      this.options = data;
+      for (const { id, name } of data) {
+        this.options.set(id, { id, name });
+      }
+
       return this.options;
     };
 
@@ -141,7 +187,7 @@
       for (const { id, name, label, options } of data || []) {
         this.source[id] = {
           id, name, label,
-          required: options.required ? options.required.map(x => +x) : [],
+          required  : options.required ? options.required.map(x => +x) : [],
           additional: options.additional ? options.additional.map(x => +x) : [],
         };
       }

@@ -54,7 +54,7 @@ class References
     /**
      * @ORM\Column(type="string")
      */
-    protected $price_formula = ":count * :length";
+    protected $price_formula = ":count * :price";
 
     /**
      * @ORM\Column(type="string")

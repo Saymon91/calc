@@ -29,7 +29,7 @@ const DEFAULT_OPTIONS = {
   headerRender : null,
   filtersRender: null,
   footerRender : null,
-  editorRender: null,
+  editorRender : null,
 
   // templates
   rowTemplate   : $('<div></div>'),
@@ -86,7 +86,7 @@ class Grid {
 
   mount() {
     this.mountContainer();
-    this.options.includeHeader &&this.mountHeader();
+    this.options.includeHeader && this.mountHeader();
     this.options.includeFilters && this.mountFilter();
     this.mountList();
     this.options.includeFooter && this.mountFooter();
@@ -209,7 +209,7 @@ class Grid {
   }
 
   calcList() {
-    const listBackgroundHeight = this.data.length * this.options.rowHeight;
+    const listBackgroundHeight = Math.max(this.data.length * this.options.rowHeight, this.elements.elements.height());
     this.elements.listBackground.height(listBackgroundHeight);
     this.startListPosition = this.elements.listBackground.offset().top;
     this.position = Math.abs(this.startListPosition - this.elements.listBackground.offset().top);
@@ -218,7 +218,7 @@ class Grid {
 
   mountFooter() {
     const template = this.options.footerTemplate;
-    this.elements.footer = this.options.grid.append(template);
+    this.elements.footer = template.appendTo(this.elements.grid);
     this.elements.footer
       .addClass('grid-footer')
       .height(this.options.footerHeight);
@@ -236,10 +236,7 @@ class Grid {
       this.displayItems[index].template.remove();
     }
 
-    console.log('render', start, finish);
-
     for (let index = start; index < finish; index++) {
-      console.log(index);
       const item = this.renderItem(index);
       this.elements.elements.append(item.template);
       this.displayItems.push(item);
@@ -250,7 +247,6 @@ class Grid {
 
   renderItem(id) {
     const item = this.data[id];
-    console.log(item);
     if (item.render instanceof Function) {
       item.template = item.render(item.data);
       return item

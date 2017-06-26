@@ -2,8 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f8e4c52-b415-47f0-afc2-9a2cc2f9fadf" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ConfigurationsController.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Configurations.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.configurations.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/list.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configuration.html.twig" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configurations.html.twig" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/calc.sql" afterPath="$PROJECT_DIR$/db/calc.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.element.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.element.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.index.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.index.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig" afterPath="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -35,11 +53,31 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="admin.options.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.options.js">
+      <file leaf-file-name="admin.elements.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="460">
-              <caret line="184" column="58" lean-forward="false" selection-start-line="184" selection-start-column="58" selection-end-line="184" selection-end-column="58" />
+              <caret line="23" column="71" lean-forward="false" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin.options.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="18" column="48" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin.index.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -48,18 +86,18 @@
       <file leaf-file-name="calc.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="143" column="9" lean-forward="false" selection-start-line="143" selection-start-column="9" selection-end-line="143" selection-end-column="9" />
+            <state relative-caret-position="683">
+              <caret line="199" column="13" lean-forward="false" selection-start-line="199" selection-start-column="13" selection-end-line="199" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="calc.sql" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/db/calc.sql">
+      <file leaf-file-name="References.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2040">
-              <caret line="102" column="510" lean-forward="true" selection-start-line="102" selection-start-column="510" selection-end-line="102" selection-end-column="510" />
+            <state relative-caret-position="220">
+              <caret line="53" column="7" lean-forward="false" selection-start-line="53" selection-start-column="7" selection-end-line="53" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -68,71 +106,49 @@
       <file leaf-file-name="grid.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="430">
+              <caret line="242" column="5" lean-forward="false" selection-start-line="242" selection-start-column="5" selection-end-line="242" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin.elements.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="73" column="11" lean-forward="false" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="320">
+              <caret line="16" column="9" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin.configuration.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configuration.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="80">
+              <caret line="4" column="6" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin.configurations.html.twig" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configurations.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
-              <caret line="95" column="8" lean-forward="false" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="26" />
+              <caret line="18" column="48" lean-forward="false" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="math.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/math.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="References.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="79" column="7" lean-forward="false" selection-start-line="79" selection-start-column="7" selection-end-line="79" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routing.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="26" column="31" lean-forward="false" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReferencesController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ReferencesController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="62" column="44" lean-forward="false" selection-start-line="62" selection-start-column="44" selection-end-line="62" selection-end-column="44" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AdminController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="21" column="1" lean-forward="false" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ElementsController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-              <folding>
-                <element signature="e#125#182#0#PHP" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -149,11 +165,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>console.log</find>
-      <find>this.templates</find>
-      <find>console</find>
-      <find>SYMFONY__DATABASE__USER</find>
-      <find>SYMFONY__</find>
       <find>S</find>
       <find>Se</find>
       <find>Ser</find>
@@ -179,6 +190,11 @@
       <find>calcOptions</find>
       <find>destruct</find>
       <find>this.options</find>
+      <find>options</find>
+      <find>Configurations</find>
+      <find>sets</find>
+      <find>footerFormatter</find>
+      <find>renderFooter</find>
     </findStrings>
     <replaceStrings>
       <replace>CalcCalcBundle</replace>
@@ -202,16 +218,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Calc/WebBundle/Controller/DefaultController.php" />
-        <option value="$PROJECT_DIR$/src/Calc/ApiBundle/Resources/config/routing.yml" />
-        <option value="$PROJECT_DIR$/app/AppKernel.php" />
-        <option value="$PROJECT_DIR$/app/config/routing.yml" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Base/css/main.css" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Base/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/Calc/WebBundle/Resources/views/Default/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/js/calc.js" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/css/calc.css" />
-        <option value="$PROJECT_DIR$/web/js/calc.js" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/floor.html.twig" />
         <option value="$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/fieldset.html.twig" />
@@ -230,29 +236,39 @@
         <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Sets.php" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.js" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.index.html.twig" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/element.html.twig" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Base.php" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/WebController.php" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Elements.php" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/DefaultController.php" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.option.html.twig" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.element.html.twig" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/api.js" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/css/admin.css" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ReferencesController.php" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig" />
-        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/math.js" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.options.js" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configuration.htms.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/Configurations.module" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/Configurations.php" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Configurations.module" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configuration.html.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/list.js" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ConfigurationsController.php" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Configurations.php" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.element.html.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.configurations.js" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configurations.html.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Elements.php" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.index.html.twig" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js" />
         <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js" />
+        <option value="$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php" />
       </list>
     </option>
   </component>
@@ -587,24 +603,6 @@
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="construction-calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="construction-calculator" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -620,16 +618,16 @@
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public" />
-      <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Resources" />
-      <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/web" />
       <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/js" />
       <recent name="$PROJECT_DIR$/src/Calc/CalcBundle" />
       <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public" />
+      <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Resources" />
+      <recent name="$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -734,7 +732,7 @@
       <workItem from="1496733202540" duration="63120000" />
       <workItem from="1496859492420" duration="20920000" />
       <workItem from="1497622363808" duration="429000" />
-      <workItem from="1497963116114" duration="44266000" />
+      <workItem from="1497963116114" duration="69920000" />
     </task>
     <task id="LOCAL-00001" summary="Update">
       <created>1496871148542</created>
@@ -806,11 +804,18 @@
       <option name="project" value="LOCAL" />
       <updated>1498067824076</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Update grid">
+      <created>1498067956580</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1498067956580</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207538000" />
+    <option name="totallyTimeSpent" value="233192000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -862,49 +867,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-288">
-          <caret line="29" column="6" lean-forward="false" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/SymfonyRequirements.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="980">
-          <caret line="98" column="7" lean-forward="true" selection-start-line="98" selection-start-column="7" selection-end-line="98" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/parameters.yml.dist">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config_dev.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="37" lean-forward="false" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config_prod.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="23" column="61" lean-forward="true" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/config_test.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Command/ServerRunCommand.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-540">
@@ -1074,14 +1036,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="4" column="100" lean-forward="false" selection-start-line="4" selection-start-column="100" selection-end-line="4" selection-end-column="100" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Base.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -1114,22 +1068,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Elements.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.element.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="6" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.option.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -1146,92 +1084,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="21" column="20" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="122" column="5" lean-forward="false" selection-start-line="122" selection-start-column="5" selection-end-line="122" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/css/admin.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="15" column="26" lean-forward="false" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="21" column="1" lean-forward="false" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="26" column="31" lean-forward="false" selection-start-line="26" selection-start-column="31" selection-end-line="26" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding>
-            <element signature="e#125#182#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="79" column="7" lean-forward="false" selection-start-line="79" selection-start-column="7" selection-end-line="79" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ReferencesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="62" column="44" lean-forward="false" selection-start-line="62" selection-start-column="44" selection-end-line="62" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="10" column="4" lean-forward="false" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="100" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="95" column="8" lean-forward="false" selection-start-line="95" selection-start-column="8" selection-end-line="95" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1252,18 +1108,179 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js">
+    <entry file="file://$PROJECT_DIR$/db/calc.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="143" column="9" lean-forward="false" selection-start-line="143" selection-start-column="9" selection-end-line="143" selection-end-column="9" />
+        <state relative-caret-position="300">
+          <caret line="15" column="35" lean-forward="false" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/db/calc.sql">
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ReferencesController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2040">
-          <caret line="102" column="510" lean-forward="true" selection-start-line="102" selection-start-column="510" selection-end-line="102" selection-end-column="510" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/AdminController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="19" column="11" lean-forward="false" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-717">
+          <caret line="5" column="6" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.element.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="5" column="6" lean-forward="false" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+          <folding>
+            <element signature="n#style#0;n#ul#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#ul#1;n#div#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.configurations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Configurations.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="803">
+          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
+          <folding>
+            <marker date="1498487314886" expanded="true" signature="155:1878" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ConfigurationsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="43" column="35" lean-forward="false" selection-start-line="43" selection-start-column="35" selection-end-line="43" selection-end-column="36" />
+          <folding>
+            <element signature="e#45#102#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/config/routing.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="26" column="29" lean-forward="false" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Controller/ElementsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6">
+          <caret line="33" column="42" lean-forward="false" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+          <folding>
+            <element signature="e#125#182#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/Elements.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="97" column="18" lean-forward="false" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/admin.elements.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="73" column="11" lean-forward="false" selection-start-line="73" selection-start-column="11" selection-end-line="73" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="16" column="9" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configuration.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="4" column="6" lean-forward="false" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.configurations.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" column="48" lean-forward="false" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.elements.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="23" column="71" lean-forward="false" selection-start-line="23" selection-start-column="71" selection-end-line="23" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.options.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="18" column="48" lean-forward="false" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/views/Show/admin.index.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/grid.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="242" column="5" lean-forward="false" selection-start-line="242" selection-start-column="5" selection-end-line="242" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Resources/public/js/calc.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="683">
+          <caret line="199" column="13" lean-forward="false" selection-start-line="199" selection-start-column="13" selection-end-line="199" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calc/CalcBundle/Entity/References.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="53" column="7" lean-forward="false" selection-start-line="53" selection-start-column="7" selection-end-line="53" selection-end-column="7" />
           <folding />
         </state>
       </provider>

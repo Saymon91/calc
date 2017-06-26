@@ -19,4 +19,9 @@ class AdminController extends DefaultController
     {
         return $this->render('CalcCalcBundle:Show:admin.options.html.twig', [], new Response(null, 200));
     }
+
+    public function configurationsAction():Response
+    {
+        return $this->render('CalcCalcBundle:Show:admin.configurations.html.twig', [], new Response(null, 200));
+    }
 }
