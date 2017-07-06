@@ -12,60 +12,60 @@
     <script type="application/javascript" src="{{ asset('bundles/calccalc/js/calc.js') }}"></script>
 {% endblock %}
 {% block header %}Калькулятор стоимости{% endblock %}
-
+{% block navigation %}<ul><li><a href="/calc/admin">Админка</a></li></ul>{% endblock %}
 {% block content %}
-    <nav>
-        <ul><a href="/calc/admin">Админка</a></ul>
-    </nav>
+    <fieldset id="layout-selector">
+        <input type="checkbox" id="layout-selector-collapse" class="collapse" disabled checked>
+        <legend><label for="layout-selector-collapse">Выбор вёрстки</label></legend>
+
+        <div class="block">
+            <input name="layout" type="radio" id="layout-item-1" value="base"><label for="layout-item-1">Базовый</label>
+            <input name="layout" type="radio" id="layout-item-2" value="modern" checked><label for="layout-item-2">Модерн</label>
+        </div>
+    </fieldset>
 
     <form name="calc" method="post" enctype="application/x-www-form-urlencoded" action="javascript:submit(this)">
     {% block editor %}
         <fieldset id="config">
             <input type="checkbox" id="config-collapse" class="collapse" disabled checked>
-            <legend><label for="config-collapse">Этажность</label></legend>
+            <legend><label for="config-collapse">Характиристики дома</label></legend>
             <div class="block">
                 <fieldset id="dimensions-floors">
                     {% block floors_count %}
                         <input type="checkbox" id="floors-collapse" class="collapse" disabled checked>
-                        <legend><label for="floors-collapse">Этажность</label></legend>
-                        <div class="block">
-                            {#
-                            <input type="radio" name="floors" value=1 id="floors-1" checked><label for="floors-1">Один</label>
-                            <input type="radio" name="floors" value=1.5 id="floors-1-5"><label for="floors-1-5">Полтора</label>
-                            <input type="radio" name="floors" value=2 id="floors-2"><label for="floors-2">Два</label>
-                            #}
-                        </div>
+                        <legend><label for="floors-collapse">Тип конфигурации</label></legend>
+                        <div class="block"></div>
                     {% endblock %}
                 </fieldset>
                 {% block dimensions %}
-                    <fieldset id="dimensions-floor1">
+                    <fieldset id="dimensions-floor1" class="dimensions-floor">
                         <input type="checkbox" id="dimensions-floor1-collapse" class="collapse" disabled checked>
-                        <legend><label for="dimensions-floor1-collapse">Габариты 1 этаж</label></legend>
+                        <legend><label for="dimensions-floor1-collapse">Габариты 1 этажа</label></legend>
                         <div class="block">
-                            <label for="dimensions-floor1-length">Длина</label><input type="number" name="length" value=0 id="dimensions-floor1-length">м
-                            <label for="dimensions-floor1-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-floor1-width">м
-                            <label for="dimensions-floor1-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-floor1-height">м
+                            <label for="dimensions-floor1-length">Длина</label><input type="number" name="length" value=0 id="dimensions-floor1-length"><span>м</span>
+                            <label for="dimensions-floor1-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-floor1-width"><span>м</span>
+                            <label for="dimensions-floor1-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-floor1-height"><span>м</span>
                             <hr>
-                            <label for="dimensions-floor1-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-floor1-area" disabled>м<sup>2</sup>
-                            <label for="dimensions-floor1-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-floor1-area-wet" disabled>м<sup>2</sup>
-                            <label for="dimensions-floor1-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-floor1-external-r" disabled>м
-                            <label for="dimensions-floor1-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-floor1-internal-r" disabled>м
-                            <label for="dimensions-floor1-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-floor1-wet-r" disabled>м
+                            <label for="dimensions-floor1-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-floor1-area" disabled><span>м<sup>2</sup></span>
+                            <label for="dimensions-floor1-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-floor1-area-wet" disabled><span>м<sup>2</sup></span>
+                            <label for="dimensions-floor1-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-floor1-external-r" disabled><span>м</span>
+                            <label for="dimensions-floor1-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-floor1-internal-r" disabled><span>м</span>
+                            <label for="dimensions-floor1-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-floor1-wet-r" disabled><span>м</span>
                         </div>
                     </fieldset>
-                    <fieldset id="dimensions-floor2" style="display: none">
+                    <fieldset id="dimensions-floor2" style="display: none" class="dimensions-floor">
                         <input type="checkbox" id="dimensions-floor2-collapse" class="collapse" disabled checked>
-                        <legend><label for="dimensions-floor2-collapse">Габариты 2 этаж</label></legend>
+                        <legend><label for="dimensions-floor2-collapse">Габариты 2 этажа</label></legend>
                         <div class="block">
-                            <label for="dimensions-floor2-length">Длина</label><input type="number" name="length" value=0 id="dimensions-floor2-length">м
-                            <label for="dimensions-floor2-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-floor2-width">м
-                            <label for="dimensions-floor2-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-floor2-height">м
+                            <label for="dimensions-floor2-length">Длина</label><input type="number" name="length" value=0 id="dimensions-floor2-length"><span>м</span>
+                            <label for="dimensions-floor2-width">Ширина</label><input type="number" name="width" value=0 id="dimensions-floor2-width"><span>м</span>
+                            <label for="dimensions-floor2-height">Высота помещений</label><input type="number" name="height" value=0 step=0.1 id="dimensions-floor2-height"><span>м</span>
                             <hr>
-                            <label for="dimensions-floor2-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-floor2-area" disabled>м<sup>2</sup>
-                            <label for="dimensions-floor2-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-floor2-area-wet" disabled>м<sup>2</sup>
-                            <label for="dimensions-floor2-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-floor2-external-r" disabled>м
-                            <label for="dimensions-floor2-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-floor2-internal-r" disabled>м
-                            <label for="dimensions-floor2-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-floor2-wet-r" disabled>м
+                            <label for="dimensions-floor2-area">Площадь</label><input type="number" name="area" value=0 step=0.1 id="dimensions-floor2-area" disabled><span>м<sup>2</sup></span>
+                            <label for="dimensions-floor2-area-wet">Площадь влажных</label><input type="number" name="area-wet" value=0 step=0.1 id="dimensions-floor2-area-wet" disabled><span>м<sup>2</sup></span>
+                            <label for="dimensions-floor2-external-r">Р внешний</label><input type="number" name="external-r" value=0 step=0.1 id="dimensions-floor2-external-r" disabled><span>м</span>
+                            <label for="dimensions-floor2-internal-r">Р внутренний</label><input type="number" name="internal-r" value=0 step=0.1 id="dimensions-floor2-internal-r" disabled><span>м</span>
+                            <label for="dimensions-floor2-wet-r">Р внешний</label><input type="number" name="wet-r" value=0 step=0.1 id="dimensions-floor2-wet-r" disabled><span>м</span>
                         </div>
                     </fieldset>
                 {% endblock %}

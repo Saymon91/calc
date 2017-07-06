@@ -12,7 +12,7 @@ const DEFAULT_OPTIONS = {
   footerHeight: 20,
 
   // include options
-  includeFilters: false,
+  includeFilter: false,
   includeFooter : false,
   includeHeader : true,
 
@@ -42,6 +42,8 @@ const DEFAULT_OPTIONS = {
   // render
   renderTimeout: 20,
 
+  autoHeight: false,
+
   // id field
   id: 'id'
 };
@@ -57,16 +59,23 @@ const DEFAULT_GRID_STYLE = {
 const DEFAULT_HEADER_STYLE = {};
 const DEFAULT_FILTER_STYLE = {};
 const DEFAULT_LIST_STYLE = {
-  display : 'grid',
-  height  : '100%',
-  width   : '100%',
-  position: 'relative',
-  overflow: 'scroll'
+  display     : 'grid',
+  height      : '100%',
+  width       : '100%',
+  position    : 'relative',
+  'overflow-y': 'auto'
 };
 
 class Grid {
   constructor(container, columns, data = [], options = {}) {
-    Object.assign(this, { data, columns, options: Object.assign({}, DEFAULT_OPTIONS, options) });
+    Object.assign(this, { columns, options: Object.assign({}, DEFAULT_OPTIONS, options) });
+
+    this.data = [];
+
+    for (const item of data) {
+      this.data.push(Object.assign(item, { index: this.data.length }))
+    }
+
     this.elements = {
       container: $(container)
     };
@@ -87,7 +96,7 @@ class Grid {
   mount() {
     this.mountContainer();
     this.options.includeHeader && this.mountHeader();
-    this.options.includeFilters && this.mountFilter();
+    this.options.includeFilter && this.mountFilter();
     this.mountList();
     this.options.includeFooter && this.mountFooter();
   }
@@ -101,20 +110,22 @@ class Grid {
       .css(Object.assign({}, DEFAULT_GRID_STYLE, this.options.gridStyle || {}))
       .appendTo(this.elements.container);
 
-    let height = this.elements.grid.height();
+    let height = this.options.autoHeight
+      ? this.data.length * this.options.rowHeight
+      : this.elements.grid.height();
     let gridTemplate = '';
 
     if (this.options.includeHeader) {
-      height -= this.options.headerHeight;
+      if (!this.options.autoHeight) height -= this.options.headerHeight;
       gridTemplate += `${this.options.headerHeight}px `;
     }
 
-    if (this.options.includeFilters) {
-      height -= this.options.filterHeight;
+    if (this.options.includeFilter) {
+      if (!this.options.autoHeight) height -= this.options.filterHeight;
       gridTemplate += `${this.options.filterHeight}px `;
     }
     if (this.options.includeFooter) {
-      height -= this.options.footerHeight;
+      if (!this.options.autoHeight) height -= this.options.footerHeight;
     }
 
     gridTemplate += `${height}px `;
@@ -178,8 +189,12 @@ class Grid {
         position: 'relative'
       })
       .appendTo(this.elements.list);
-    const elementsBlockHeight = this.elements.list.height();
-    this.elementsCount = elementsBlockHeight / this.options.rowHeight;
+    const elementsBlockHeight = this.options.autoHeight
+      ? this.data.length * this.options.rowHeight
+      : this.elements.list.height();
+    this.elementsCount = this.options.autoHeight
+      ? this.data.length
+      : elementsBlockHeight / this.options.rowHeight;
     this.elements.elements = $('<div></div>')
       .addClass('grid-list-elements')
       .css({
@@ -190,6 +205,7 @@ class Grid {
         display             : 'grid',
         'grid-template-rows': `repeat(${this.elementsCount}, ${this.options.rowHeight}px)`
       })
+      .height(elementsBlockHeight)
       .appendTo(this.elements.listBackground);
 
     this.elements.list.on('scroll', () => {
@@ -204,6 +220,14 @@ class Grid {
         this.render();
       }, this.options.renderTimeout);
     });
+
+    if (this.options.autoHeight) {
+      let height = elementsBlockHeight;
+      if (this.options.includeHeader) height += this.options.headerHeight;
+      if (this.options.includeFilter) height += this.options.filterHeight;
+      if (this.options.includeFooter) height += this.options.footerHeight;
+      this.elements.grid.height(height);
+    }
 
     this.calcList();
   }
@@ -248,12 +272,12 @@ class Grid {
   renderItem(id) {
     const item = this.data[id];
     if (item.render instanceof Function) {
-      item.template = item.render(item.data);
+      item.template = item.render(item, this);
       return item
     }
 
     if (this.options.rowRender instanceof Function) {
-      item.template = this.options.rowRender(item.data);
+      item.template = this.options.rowRender(item, this);
       return item;
     }
 
@@ -268,7 +292,7 @@ class Grid {
       const { id, name, field, cellFormatter } = column;
       const columnName = field || id || name;
       if (cellFormatter instanceof Function) {
-        cellFormatter(template, item.data, columnName);
+        cellFormatter(template, item, columnName, this);
       } else {
         template.find(`.${columnName}`).text(item.data[columnName]);
       }
@@ -294,13 +318,26 @@ class Grid {
     this.options = Object.assign({}, DEFAULT_OPTIONS);
   }
 
-  removeItem(id) {
+  removeItem(index) {
+    if (index >= this.data.length) {
+      return;
+    }
 
+    const item = this.data[index];
+    this.data.splice(index, 1);
+    item.template && item.template.remove();
+    for (let i = index, length = this.data.length; i < length; i++) {
+      this.data[i].index = i;
+    }
+
+    this.mount();
+    this.render();
   }
 
   addItem(item) {
-    this.data.push(item);
-    this.calcList();
+    this.data.push(Object.assign(item, { index: this.data.length }));
+    this.mount();
+    this.render();
     this.elements.list.scrollTop(this.startListPosition - this.maxPosition);
   }
 }

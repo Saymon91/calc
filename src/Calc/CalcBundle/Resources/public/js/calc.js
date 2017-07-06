@@ -45,6 +45,8 @@
       Object.assign(this.elements, {
         content,
 
+        layoutSelector: content.find('input[name="layout"]:radio'),
+
         floors: content.find('input[name="floors"]'),
 
         widthFloor1 : content.find('#dimensions-floor1-width'),
@@ -125,74 +127,75 @@
         }
       });
 
-      /*
-      for (const name in this.options) {
-        this.options[name].grid.destruct();
-        this.options[name].block.remove();
-        delete this.options[name];
-      }
+      this.elements.layoutSelector.change(({ target }) => {
+        this.elements.body.removeClass();
+        this.elements.body.addClass(target.value);
+      });
 
-      for (let index = 1; index <= Math.floor(this.elements.floors.filter(':checked').val()); index++) {
-        this.buildOptions(`floor${index}`, `floor${index}`);
-        this.calcOptions(`floor${index}`);
-      }
-
-      this.buildOptions(`attic`, this.parameters.lastFloor);
-      this.calcOptions(`attic`);
-      this.buildOptions(`roof`, this.parameters.lastFloor);
-      this.calcOptions(`roof`);
-      */
+      this.elements.body.addClass(content.find('input[name="layout"]:radio:checked').val());
     }
 
-    createGrid(sourceFloor, container, data) {
+    createGrid(sourceFloor, container, options, element) {
       const source = this.parameters[sourceFloor];
       const columns = [
         'name',
         {
-          name : 'count',
-          field: 'count',
-          cellFormatter: (row, item, key) => {
-            const { calcCount } = item;
-            $(row).find(`.${key}`).text((calcCount.call(Object.assign({}, item, source)) || 0).toFixed(2));
+          name         : 'count',
+          field        : 'count',
+          cellFormatter: (row, { data }, key) => {
+            const { calcCount } = data;
+            $(row).find(`.${key}`).text((calcCount.call(Object.assign({}, data, source)) || 0).toFixed(2));
           }
         },
         'unit',
         {
-          name : 'price',
-          field: 'price',
-          cellFormatter: (row, item, key) => {
-            $(row).find(`.${key}`).find('.wet').text((item.price_wet || 0).toFixed(2));
-            $(row).find(`.${key}`).find('.dry').text((item.price_dry || 0).toFixed(2));
+          name         : 'price',
+          field        : 'price',
+          cellFormatter: (row, { data }, key) => {
+            $(row).find(`.${key}`).find('.wet').text((data.price_wet || 0).toFixed(2));
+            $(row).find(`.${key}`).find('.dry').text((data.price_dry || 0).toFixed(2));
           }
         },
         {
-          name: 'total',
-          field: 'total',
-          cellFormatter: (row, item, key) => {
-            const { calcCount, calcPrice } = item;
-            const context = Object.assign({}, item, source);
+          name         : 'total',
+          field        : 'total',
+          cellFormatter: (row, { data }, key) => {
+            const { calcCount, calcPrice } = data;
+            const context = Object.assign({}, data, source);
             context.count = calcCount.call(context);
-            item.total = {
+            data.total = {
               wet: calcPrice.call(context, 'wet'),
               dry: calcPrice.call(context, 'dry')
             };
 
-            $(row).find(`.${key}`).find('.wet').text((item.total.wet || 0).toFixed(2));
-            $(row).find(`.${key}`).find('.dry').text((item.total.dry || 0).toFixed(2));
+            $(row).find(`.${key}`).find('.wet').text((data.total.wet || 0).toFixed(2));
+            $(row).find(`.${key}`).find('.dry').text((data.total.dry || 0).toFixed(2));
           }
-        }, 'currency'
+        },
+        'currency',
+        {
+          name         : 'remove',
+          field        : 'remove',
+          cellFormatter: (row, item, key, grid) => {
+            const { index, data } = item;
+            if (this.sets[element].additional.includes(data.id)) {
+              $(row).find(`.${key}`).append($('<button>-</button>').on('click', event => {
+                event && event.preventDefault();
+                grid.removeItem(index);
+                this.options[element].selector.find(`option[value=${data.id}]`).prop('disabled', false);
+              }));
+            }
+          }
+        }
       ];
-      return new Grid(container, columns, data, {
+      return new Grid(container, columns, options, {
         id             : 'id',
         rowTemplate    : this.templates.option.clone(),
         headerTemplate : this.templates.option.clone(),
-        footerTemplate : $('<div class="list-footer"><span>ВСЕГО:</span><span class="list-total"></span></div>'),
+        footerTemplate : $('<div class="list-footer options"><span>ВСЕГО:</span><span class="list-total"><span class="dry"></span><span class="wet"></span></span></div>'),
         includeFooter  : true,
         footerFormatter: (template, grid) => {
-          const total = {
-            dry: 0,
-            wet: 0
-          };
+          const total = { dry: 0, wet: 0 };
           for (const { data } of grid.data) {
             if (data.total) {
               total.dry += +data.total.dry;
@@ -200,8 +203,10 @@
             }
           }
 
-          template.find('.list-total').text(`${total.dry.toFixed(2)}/${total.wet.toFixed(2)}`);
-        }
+          template.find('.list-total').find('.dry').text(`${isFinite(total.dry) ? total.dry.toFixed(2) : 0}`);
+          template.find('.list-total').find('.wet').text(`${isFinite(total.wet) ? total.wet.toFixed(2) : 0}`);
+        },
+        autoHeight     : true
       });
     }
 
@@ -239,31 +244,62 @@
     }
 
     buildOptions(element, source) {
-      const data = this.sets[element].required.map(id => { return { data: this.references[id] }; });
+      const required = this.sets[element].required.map(id => { return { data: this.references[id] }; });
+      const additional = this.sets[element].additional.map(id => { return { data: this.references[id] }; });
       let block = this.templates.options.clone().appendTo(this.elements.optionsBlock);
       block.prop('id', `parameters-${element}`);
-      const grid = this.createGrid(source, block.find('.required').find('div'), data);
-      let checkbox = block
+      block.find('label').prop('for', `options-${element}-collapse`).text(this.sets[element].label);
+      this.options[element] = { block };
+      this.buildRequiredGrid(element, source, block, required);
+      this.buildAdditionalSelector(element, source, block, additional);
+    }
+
+    buildRequiredGrid(element, source, container, data) {
+      const checkbox = container
         .find('input[type="checkbox"].collapse')
         .prop('id', `options-${element}-collapse`);
-      block.find('label').prop('for', `options-${element}-collapse`).text(this.sets[element].label);
+      const grid = this.createGrid(source, container.find('.required').find('div'), data, element);
+
+      grid.mount();
+
       checkbox.on('change', () => {
         grid.mount();
-        grid.render();
+        checkbox.is(':checked') && grid.render();
       });
-      grid.mount();
-      grid.render();
 
-      this.options[element] = { block, grid };
+      checkbox.is(':checked') && grid.render();
+      Object.assign(this.options[element], { grid });
+      return grid;
+    }
+
+    buildAdditionalSelector(element, source, container, options) {
+      const selector = container.find('select').prop('name', `additional-options-${element}`);
+      const button = container.find('.add').on('click', event => {
+        event && event.preventDefault();
+        const item = { data: this.references[selector.val()] };
+        this.options[element].grid.addItem(item);
+        selector.find(`option[value=${selector.val()}]`).prop('disabled', true);
+      });
+
+      for (const { data } of options) {
+        selector.append(new Option(data.name, data.id, false, false));
+      }
+
+      selector.on('change', () => button.prop('disabled', !selector.val()));
+      button.prop('disabled', !selector.val());
+
+      Object.assign(this.options[element], { selector });
+
+      return selector;
     }
 
     calcOptions(element) {
       if (this.options[element]) {
-        this.options[element].grid.render();
-      } else {
-        for (const name in this.options) {
-          this.options[name].grid.render();
-        }
+        return this.options[element].grid.render()
+      }
+
+      for (const name in this.options) {
+        this.options[name].grid.render();
       }
     }
 
@@ -293,6 +329,7 @@
 
         option.calcCount = new Function(countFunc);
         option.calcPrice = new Function('type', priceFunc);
+
         this.references[option.id] = option;
       }
 
@@ -323,6 +360,7 @@
       for (const name in data) {
         this.templates[name] = $(data[name]);
       }
+
       return this.templates;
     };
 

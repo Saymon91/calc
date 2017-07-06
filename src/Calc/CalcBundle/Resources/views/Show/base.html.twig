@@ -11,17 +11,20 @@
     <title>{%  block title %}{% endblock %}</title>
 </head>
 <body>
-<header>
-    <section class="content">
-        <h4>{%  block header %}{% endblock %}</h4>
-    </section>
-</header>
-<nav>{%  block navigation %}{% endblock %}</nav>
-<article class="content">
-    {%  block content %}{% endblock %}
-</article>
-<footer>
-    <div class="content">{%  block footer %}{% endblock %}</div>
-</footer>
+<div class="background"></div>
+<div class="page-content">
+    <header>
+        <section class="content">
+            <h4>{%  block header %}{% endblock %}</h4>
+        </section>
+    </header>
+    <nav>{%  block navigation %}{% endblock %}</nav>
+    <article class="content">
+        {%  block content %}{% endblock %}
+    </article>
+    <footer>
+        <div class="content">{%  block footer %}{% endblock %}</div>
+    </footer>
+</div>
 </body>
 </html>
